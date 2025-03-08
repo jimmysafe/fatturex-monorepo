@@ -12,14 +12,20 @@
     "db:generate": "pnpm --filter database generate",
     "db:migrate": "pnpm --filter database migrate",
     "db:seed": "pnpm --filter database seed",
-    "test:e2e": "pnpm --filter web-client test:e2e"
+    "test:e2e": "pnpm --filter web-client test:e2e",
+    "prepare": "husky"
   },
   "devDependencies": {
     "turbo": "^2.4.4",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3"
   },
   "packageManager": "pnpm@9.12.3",
   "engines": {
     "node": ">=18"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,json,css}": "turbo lint --"
   }
 }
