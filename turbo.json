@@ -22,9 +22,7 @@
     "lint": {
       "dependsOn": [
         "^lint"
-      ],
-      "cache": false,
-      "persistent": false
+      ]
     }
   }
 }
