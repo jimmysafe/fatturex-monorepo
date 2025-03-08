@@ -23,9 +23,7 @@ export const env = createEnv({
     NEXT_PUBLIC_APP_URL: z.string().default(
       process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL
         ? `https://${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL}`
-        : process.env.NEXT_PUBLIC_VERCEL_URL
-          ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-          : "http://localhost:3000",
+        : "http://localhost:3000",
     ),
     NEXT_PUBLIC_BUCKET_URL: z.string().min(1),
   },
