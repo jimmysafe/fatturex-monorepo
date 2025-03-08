@@ -10,6 +10,8 @@ export async function sendOtpSigninEmail(email: string, otp: string) {
     console.log("APP ENV: ", process.env.APP_ENV);
     // eslint-disable-next-line no-console
     console.log("VERCEL ENV: ", process.env.VERCEL_ENV);
+    // eslint-disable-next-line no-console
+    console.log("RESEND API KEY: ", process.env.RESEND_API_KEY);
 
     if (process.env.APP_ENV !== "production") {
       // eslint-disable-next-line no-console
