@@ -12,9 +12,12 @@
     "react": "catalog:react",
     "react-dom": "catalog:react",
     "next": "catalog:react",
-    "@repo/ui": "workspace:*"
+    "@repo/ui": "workspace:*",
+    "@repo/database": "workspace:*",
+    "@repo/shared": "workspace:*"
   },
   "devDependencies": {
+    "@libsql/client": "catalog:",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "typescript": "catalog:",

@@ -1,0 +1,44 @@
+{
+    "name": "@repo/database",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "exports": {
+        "./*": {
+            "types": "./src/*.ts",
+            "default": "./dist/*.js"
+        }
+    },
+    "scripts": {
+        "dev": "concurrently --names WATCHER,TURSO -c cyan,magenta \"tsc --watch\" \"pnpm db:dev\"",
+        "build": "tsc",
+        "lint": "eslint . --fix",
+        "db:dev": "turso dev --db-file dev.db",
+        "generate": "drizzle-kit generate",
+        "migrate": "drizzle-kit migrate",
+        "studio": "drizzle-kit studio",
+        "push": "drizzle-kit push"
+    },
+    "peerDependencies": {
+        "zod": "catalog:",
+        "@libsql/client": "catalog:"
+    },
+    "dependencies": {
+        "drizzle-orm": "catalog:",
+        "drizzle-zod": "^0.7.0",
+        "uuid": "^11.0.5",
+        "@repo/shared": "workspace:*",
+        "zod": "catalog:"
+    },
+    "devDependencies": {
+        "@faker-js/faker": "catalog:",
+        "@repo/eslint-config": "workspace:*",
+        "@repo/typescript-config": "workspace:*",
+        "drizzle-kit": "^0.30.4",
+        "eslint": "catalog:",
+        "turso": "^0.1.0",
+        "typescript": "catalog:",
+        "dotenv": "^16.4.5",
+        "concurrently": "^9.1.2"
+    }
+}
