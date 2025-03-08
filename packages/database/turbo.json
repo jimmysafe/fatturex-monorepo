@@ -1,0 +1,11 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "passThroughEnv": [
+        "DATABASE_URL",
+        "DATABASE_AUTH_TOKEN"
+      ]
+    }
+  }
+}
