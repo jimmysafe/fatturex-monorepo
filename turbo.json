@@ -15,6 +15,10 @@
         "!.next/cache/**"
       ]
     },
+    "migrate": {
+      "cache": false,
+      "persistent": false
+    },
     "dev": {
       "cache": false,
       "persistent": true
