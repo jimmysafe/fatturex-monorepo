@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useMemo, useState } from 'react';
+import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { cn } from '@repo/ui/lib/utils';
 import type { ButtonProps } from '@repo/ui/components/ui/button';
@@ -10,7 +10,23 @@ import {
   PopoverTrigger,
 } from '@repo/ui/components/ui/popover';
 import { Input } from '@repo/ui/components/ui/input';
-import { useForwardedRef } from '@repo/ui/hooks/use-forwarded-ref';
+
+function useForwardedRef<T>(ref: React.ForwardedRef<T>) {
+  const innerRef = useRef<T>(null);
+
+  useEffect(() => {
+    if (!ref)
+      return;
+    if (typeof ref === "function") {
+      ref(innerRef.current);
+    }
+    else {
+      ref.current = innerRef.current;
+    }
+  });
+
+  return innerRef;
+}
 
 interface ColorPickerProps {
   value: string;
