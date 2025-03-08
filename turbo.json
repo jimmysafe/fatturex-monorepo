@@ -1,9 +1,9 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "ui": "tui",
   "tasks": {
     "build": {
       "dependsOn": [
+        "@repo/database#migrate",
         "^build"
       ],
       "inputs": [
@@ -16,7 +16,7 @@
       ]
     },
     "migrate": {
-      "cache": false,
+      "cache": true,
       "persistent": false
     },
     "dev": {
