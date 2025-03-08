@@ -1,10 +1,6 @@
 /* eslint-disable node/no-process-env */
 // import { SigninInOtpEmail } from "@repo/ui/components/email/signin-otp";
-import * as dotenv from "dotenv";
 // import { Resend } from "resend";
-
-dotenv.config();
-
 // const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendOtpSigninEmail(_: string, otp: string) {

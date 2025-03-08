@@ -167,6 +167,9 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 20.17.24
       dotenv:
         specifier: ^16.4.5
         version: 16.4.7
@@ -207,6 +210,9 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 20.17.24
       concurrently:
         specifier: ^9.1.2
         version: 9.1.2
