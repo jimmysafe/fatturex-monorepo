@@ -1,10 +1,9 @@
+import { codiceFiscaleRegex, partitaIvaRegex } from "@repo/shared/regex";
 import { sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { v4 as randomUUID } from "uuid";
 import { z } from "zod";
-
-import { codiceFiscaleRegex, partitaIvaRegex } from "@repo/shared/regex";
 
 import { user } from "./auth.schema";
 

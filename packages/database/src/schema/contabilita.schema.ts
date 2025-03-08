@@ -1,14 +1,13 @@
+import type { EnpapiTipoAgevolazioneType } from "../lib/enums";
 import { relations, sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { v4 as randomUUID } from "uuid";
+
 import { z } from "zod";
 
-import type { EnpapiTipoAgevolazioneType } from "@/lib/enums";
-
-import { EnpapiTipoAgevolazione, EnpapiTipoAgevolazioneValues } from "@/lib/enums";
-
-import { decimal, textEnum } from "@/lib/utils";
+import { EnpapiTipoAgevolazione, EnpapiTipoAgevolazioneValues } from "../lib/enums";
+import { decimal, textEnum } from "../lib/utils";
 import { user } from "./auth.schema";
 
 export const contabilita = sqliteTable("contabilita", {

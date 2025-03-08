@@ -1,14 +1,13 @@
+import type { SubscriptionStatoType } from "../lib/enums";
 import { relations } from "drizzle-orm";
 import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { v4 as randomUUID } from "uuid";
+
 import { z } from "zod";
 
-import type { SubscriptionStatoType } from "@/lib/enums";
-
-import { SubscriptionStato, SubscriptionStatoValues } from "@/lib/enums";
-
-import { textEnum } from "@/lib/utils";
+import { SubscriptionStato, SubscriptionStatoValues } from "../lib/enums";
+import { textEnum } from "../lib/utils";
 import { user } from "./auth.schema";
 
 export const subscription = sqliteTable("subscription", {

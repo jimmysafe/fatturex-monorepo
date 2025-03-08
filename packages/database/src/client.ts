@@ -1,19 +1,21 @@
+/* eslint-disable node/no-process-env */
+import type { LibSQLDatabase } from "drizzle-orm/libsql";
+
 import { createClient } from "@libsql/client";
-import { drizzle, type LibSQLDatabase } from "drizzle-orm/libsql";
+import * as dotenv from "dotenv";
+import { drizzle } from "drizzle-orm/libsql";
 
 import * as schema from "./schema";
 
+dotenv.config();
+
 export type DrizzleDB = LibSQLDatabase<typeof schema>;
 
-export function createDb<E extends { url: string, authToken?: string }>(env: E) {
-  const client = createClient({
-    url: env.url,
-    authToken: env.authToken,
-  });
+const client = createClient({
+  url: process.env.DATABASE_URL!,
+  authToken: process.env.DATABASE_AUTH_TOKEN,
+});
 
-  const db = drizzle(client, {
-    schema,
-  });
-
-  return { db, client };
-}
+export const db = drizzle(client, {
+  schema,
+});

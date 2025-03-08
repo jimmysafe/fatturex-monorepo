@@ -1,10 +1,10 @@
+import type { FatturaMetodoPagamentoType, FatturaPreferenzaDataSaldoType, FatturaStatoType, FteStatoType, StsStatoType } from "../lib/enums";
 import { relations, sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { v4 as randomUUID } from "uuid";
-import { z } from "zod";
 
-import type { FatturaMetodoPagamentoType, FatturaPreferenzaDataSaldoType, FatturaStatoType, FteStatoType, StsStatoType } from "@/lib/enums";
+import { z } from "zod";
 
 import {
   FatturaMetodoPagamento,
@@ -17,9 +17,8 @@ import {
   FteStatoValues,
   StsStato,
   StsStatoValues,
-} from "@/lib/enums";
-
-import { decimal, textEnum } from "@/lib/utils";
+} from "../lib/enums";
+import { decimal, textEnum } from "../lib/utils";
 import { user } from "./auth.schema";
 import { cliente } from "./cliente.schema";
 import { indirizzo } from "./indirizzo.schema";

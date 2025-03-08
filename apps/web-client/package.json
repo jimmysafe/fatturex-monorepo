@@ -6,26 +6,29 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint . --fix"
   },
   "dependencies": {
+    "@repo/auth": "workspace:*",
+    "@repo/database": "workspace:*",
+    "@repo/shared": "workspace:*",
+    "@repo/ui": "workspace:*",
+    "@t3-oss/env-nextjs": "catalog:",
+    "next": "catalog:react",
     "react": "catalog:react",
     "react-dom": "catalog:react",
-    "next": "catalog:react",
-    "@repo/ui": "workspace:*",
-    "@repo/database": "workspace:*",
-    "@repo/shared": "workspace:*"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@libsql/client": "catalog:",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "typescript": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:react",
     "@types/react-dom": "catalog:react",
-    "tailwindcss": "catalog:",
     "eslint": "catalog:",
-    "postcss": "catalog:"
+    "postcss": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
   }
 }

@@ -1,13 +1,13 @@
+import type { UserCassaType, UserRolesType } from "../lib/enums";
+import { PRIMARY_COLOR } from "@repo/shared/const";
 import { relations } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+
 import { z } from "zod";
 
-import type { UserCassaType, UserRolesType } from "@/lib/enums";
-import { UserCassa, UserCassaValues, UserRoles, UserRolesValues } from "@/lib/enums";
-import { PRIMARY_COLOR } from "@repo/shared/const";
-
-import { textEnum } from "@/lib/utils";
+import { UserCassa, UserCassaValues, UserRoles, UserRolesValues } from "../lib/enums";
+import { textEnum } from "../lib/utils";
 import { partitaIva } from "./partita-iva.schema";
 import { subscription } from "./subscription.schema";
 

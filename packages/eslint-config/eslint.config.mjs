@@ -16,7 +16,7 @@ export default antfu(
     ignores: [
       "**/.next",
       "**/next-env.d.ts",
-      "**/src/db/migrations/*",
+      "**/src/migrations/*",
       "**/src/components/ui/*",
       "**/src/server/actions/sts/invioSincrono/*",
     ],
@@ -40,6 +40,7 @@ export default antfu(
       "react/prefer-destructuring-assignment": ["off"],
       "react-refresh/only-export-components": ["off"],
       "no-console": ["error"],
+      "style/no-tabs": ["off"],
       "antfu/no-top-level-await": ["off"],
       "node/prefer-global/process": ["off"],
       "node/no-process-env": ["error"],

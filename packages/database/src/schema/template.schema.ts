@@ -4,7 +4,7 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { v4 as randomUUID } from "uuid";
 import { z } from "zod";
 
-import { decimal } from "@/lib/utils";
+import { decimal } from "../lib/utils";
 import { user } from "./auth.schema";
 
 export const template = sqliteTable("templates", {

@@ -1,6 +1,5 @@
-import Image from "next/image";
-
 import { cn } from "@repo/ui/lib/utils";
+import Image from "next/image";
 
 export function Logo({ iconOnly = true, ...props }: { className?: string; iconOnly?: boolean }) {
   if (iconOnly)
