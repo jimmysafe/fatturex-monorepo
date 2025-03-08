@@ -9,8 +9,6 @@ export default function AppLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.error("hello");
-
   // ! Prefetching
   _getUserSubscription();
   _getPartitaIva();
