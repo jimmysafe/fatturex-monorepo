@@ -1,11 +1,10 @@
 import type { PropsWithChildren } from "react";
 
-import type { RootCredenzaProps } from "@/components/ui/credenza";
+import type { RootCredenzaProps } from "@repo/ui/components/ui/credenza";
 
-import { Button } from "@/components/ui/button";
-import { Credenza, CredenzaBody, CredenzaClose, CredenzaContent, CredenzaDescription, CredenzaFooter, CredenzaHeader, CredenzaTitle, CredenzaTrigger } from "@/components/ui/credenza";
-
-import { Label } from "../ui/label";
+import { Button } from "@repo/ui/components/ui/button";
+import { Credenza, CredenzaBody, CredenzaClose, CredenzaContent, CredenzaDescription, CredenzaFooter, CredenzaHeader, CredenzaTitle, CredenzaTrigger } from "@repo/ui/components/ui/credenza";
+import { Label } from "@repo/ui/components/ui/label";
 
 export type ModalProps = Omit<RootCredenzaProps, "children">;
 

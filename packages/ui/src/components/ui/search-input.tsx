@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Input } from "./input";
+import { Input } from "@repo/ui/components/ui/input";
 import { SearchIcon, XIcon } from "lucide-react";
-import { useDebounce } from "@/lib/hooks/use-debounce";
+import { useDebounce } from "@repo/ui/hooks/use-debounce";
 import { cn } from "@repo/ui/lib/utils";
 
 type SearchInputProps = Omit<React.ComponentProps<"input">, 'onChange' | 'value' | 'type'> & {

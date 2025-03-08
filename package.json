@@ -11,7 +11,8 @@
     "db:studio": "pnpm --filter database studio",
     "db:generate": "pnpm --filter database generate",
     "db:migrate": "pnpm --filter database migrate",
-    "db:seed": "pnpm --filter database seed"
+    "db:seed": "pnpm --filter database seed",
+    "test:e2e": "pnpm --filter web-client test:e2e"
   },
   "devDependencies": {
     "turbo": "^2.4.4",

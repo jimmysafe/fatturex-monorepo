@@ -14,12 +14,12 @@
   "peerDependencies": {
     "@repo/database": "workspace:*",
     "@repo/ui": "workspace:*",
+    "better-auth": "catalog:",
     "react": "catalog:react",
     "react-dom": "catalog:react"
   },
   "dependencies": {
     "@repo/shared": "workspace:*",
-    "better-auth": "^1.1.17",
     "resend": "catalog:",
     "sonner": "catalog:"
   },

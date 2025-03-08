@@ -6,6 +6,6 @@
       "@repo/ui/*": ["./src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "../../apps/web-client/src/components/common/global-alerts.tsx", "../../apps/web-client/src/components/common/logo.tsx"],
   "exclude": ["node_modules"]
 }

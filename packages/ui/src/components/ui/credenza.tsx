@@ -9,8 +9,8 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
-import { ScrollArea } from "@/components/ui/scroll-area";
+} from "@repo/ui/components/ui/drawer";
+import { ScrollArea } from "@repo/ui/components/ui/scroll-area";
 import {
   Sheet,
   SheetClose,
@@ -20,11 +20,11 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import { useMediaQuery } from "@/lib/hooks/use-media-query";
+} from "@repo/ui/components/ui/sheet";
+import { useMediaQuery } from "@repo/ui/hooks/use-media-query";
 import { cn } from "@repo/ui/lib/utils";
 import * as React from "react";
-import { Skeleton } from "./skeleton";
+import { Skeleton } from "@repo/ui/components/ui/skeleton";
 
 interface BaseProps {
   children: React.ReactNode;

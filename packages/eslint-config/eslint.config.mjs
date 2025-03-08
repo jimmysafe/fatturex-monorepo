@@ -34,6 +34,7 @@ export default antfu(
   },
   {
     rules: {
+      "tailwindcss/no-custom-classname": ["off"],
       "style/multiline-ternary": ["off"],
       "node/prefer-global/buffer": ["off"],
       "unused-imports/no-unused-vars": ["off"],

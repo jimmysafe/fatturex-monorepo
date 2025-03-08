@@ -6,15 +6,13 @@ import type { Stepper, Step as StepperStep } from "@stepperize/react";
 import type { z, ZodSchema } from "zod";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@repo/ui/components/ui/button";
+import { Form } from "@repo/ui/components/ui/form";
+import { Progress } from "@repo/ui/components/ui/progress";
+import { Separator } from "@repo/ui/components/ui/separator";
+import { useMediaQuery } from "@repo/ui/hooks/use-media-query";
 import { defineStepper } from "@stepperize/react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-
-import { useMediaQuery } from "@/lib/hooks/use-media-query";
-
-import { Button } from "../ui/button";
-import { Form } from "../ui/form";
-import { Progress } from "../ui/progress";
-import { Separator } from "../ui/separator";
 
 export type Step = StepperStep & {
   label: string;
@@ -127,7 +125,7 @@ function LineStepIndicator({
       <Progress value={fillPercentage} className="h-2" />
       <section className="flex items-start justify-between">
         <div className="space-y-2">
-          <h5 data-testid={`${steps[currentStepIndex].id}-title`} className="text-sm font-bold">{steps[currentStepIndex]?.label}</h5>
+          <h5 data-testid={`${steps[currentStepIndex]?.id}-title`} className="text-sm font-bold">{steps[currentStepIndex]?.label}</h5>
           { steps[currentStepIndex]?.descrizione && <p className="max-w-lg text-sm text-muted-foreground">{steps[currentStepIndex]?.descrizione}</p> }
         </div>
         {/* <div className="aspect-square bg-muted flex items-center p-2 rounded-md">
@@ -154,7 +152,7 @@ function CircleStepIndicator({
   return (
     <section className="flex items-start justify-between">
       <div className="space-y-2">
-        <h5 data-testid={`${steps[currentStepIndex].id}-title`} className="text-sm font-bold">{steps[currentStepIndex]?.label}</h5>
+        <h5 data-testid={`${steps[currentStepIndex]?.id}-title`} className="text-sm font-bold">{steps[currentStepIndex]?.label}</h5>
         { steps[currentStepIndex]?.descrizione && <p className="max-w-lg whitespace-pre-line text-sm text-muted-foreground">{steps[currentStepIndex]?.descrizione}</p> }
       </div>
       <div className="relative inline-flex items-center justify-center">

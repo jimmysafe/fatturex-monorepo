@@ -1,6 +1,6 @@
-import type { UserCassaType } from "./enums";
+import type { UserCassaType } from "@repo/database/lib/enums";
 
-import { UserCassa } from "./enums";
+import { UserCassa } from "@repo/database/lib/enums";
 
 interface Cassa {
   label: string;
