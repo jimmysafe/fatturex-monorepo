@@ -1,12 +1,11 @@
+import { decimal } from "@repo/database/lib/utils";
+import { user } from "@repo/database/schemas/auth.schema";
 import { codiceFiscaleRegex } from "@repo/shared/regex";
 import { relations, sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { v4 as randomUUID } from "uuid";
 import { z } from "zod";
-
-import { decimal } from "../lib/utils";
-import { user } from "./auth.schema";
 
 export const partitaIva = sqliteTable("partita_iva", {
   id: text("id", { length: 36 }).primaryKey().$defaultFn(() => randomUUID()),

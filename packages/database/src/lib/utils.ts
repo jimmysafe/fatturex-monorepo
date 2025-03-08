@@ -3,6 +3,8 @@ import type { SQLiteColumn } from "drizzle-orm/sqlite-core";
 import { between } from "drizzle-orm";
 import { customType } from "drizzle-orm/sqlite-core";
 
+export * from "drizzle-orm";
+
 export const decimal = customType<{ data: number }>({
   dataType() {
     return "decimal(10, 2)";

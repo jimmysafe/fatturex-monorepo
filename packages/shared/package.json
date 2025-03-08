@@ -4,14 +4,10 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./*": {
-      "types": "./src/*.ts",
-      "default": "./dist/*.js"
-    }
+    "./*": "./src/*.ts"
   },
   "scripts": {
-    "lint": "eslint . --fix",
-    "build": "tsc"
+    "lint": "eslint . --fix"
   },
   "peerDependencies": {
     "zod": "catalog:"

@@ -1,8 +1,7 @@
+import { decimal } from "@repo/database/lib/utils";
 import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
-
-import { decimal } from "../lib/utils";
 
 export const codiceAteco = sqliteTable("codice_ateco", {
   codice: text("codice").primaryKey(),

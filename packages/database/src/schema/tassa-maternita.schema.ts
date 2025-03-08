@@ -1,14 +1,12 @@
+import type { UserCassaType } from "@repo/database/lib/enums";
 import type { z } from "zod";
 
-import type { UserCassaType } from "../lib/enums";
+import { UserCassaValues } from "@repo/database/lib/enums";
+import { decimal, textEnum } from "@repo/database/lib/utils";
 import { sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-
 import { v4 as randomUUID } from "uuid";
-
-import { UserCassaValues } from "../lib/enums";
-import { decimal, textEnum } from "../lib/utils";
 
 export const tassaMaternita = sqliteTable("tassa_maternita", {
   id: text("id", { length: 36 }).primaryKey().$defaultFn(() => randomUUID()),

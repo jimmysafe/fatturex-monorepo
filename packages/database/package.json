@@ -4,26 +4,15 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./client": {
-      "types": "./src/client.ts",
-      "default": "./dist/client.js"
-    },
-    "./schema": {
-      "types": "./src/schema/index.ts",
-      "default": "./dist/schema/index.js"
-    },
-    "./lib/*": {
-      "types": "./src/lib/*.ts",
-      "default": "./dist/lib/*.js"
-    },
-    "./utils": {
-      "types": "./src/utils.ts",
-      "default": "./dist/utils.js"
-    }
+    "./lib/*": "./src/lib/*.ts",
+    "./client": "./src/client.ts",
+    "./schema": "./src/schema/index.ts",
+    "./schemas/*": "./src/schema/*.ts",
+    "./pagination/*": "./src/pagination/*.ts",
+    "./queries/*": "./src/queries/*.ts"
   },
   "scripts": {
-    "dev": "concurrently --names WATCHER,TURSO -c cyan,magenta \"tsc --watch\" \"pnpm db:dev\"",
-    "build": "tsc",
+    "dev": "pnpm db:dev",
     "lint": "eslint . --fix",
     "db:dev": "turso dev --db-file dev.db",
     "generate": "drizzle-kit generate",
@@ -47,7 +36,6 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "catalog:",
-    "concurrently": "^9.1.2",
     "dotenv": "^16.4.5",
     "drizzle-kit": "^0.30.4",
     "eslint": "catalog:",

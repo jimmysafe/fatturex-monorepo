@@ -1,13 +1,10 @@
+import { sendOtpSigninEmail } from "@repo/auth/lib/send-otp-email";
 import { db } from "@repo/database/client";
+import { getUserPublicDetails } from "@repo/database/queries/user";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 import { customSession, emailOTP } from "better-auth/plugins";
-
-import { getUserPublicDetails } from "./lib/get-user-pub-details";
-import { sendOtpSigninEmail } from "./lib/send-otp-email";
-
-export type AuthClient = typeof auth;
 
 export const auth = betterAuth({
   session: {

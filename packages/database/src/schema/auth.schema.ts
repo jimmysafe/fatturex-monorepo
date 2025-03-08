@@ -1,15 +1,14 @@
-import type { UserCassaType, UserRolesType } from "../lib/enums";
+import type { UserCassaType, UserRolesType } from "@repo/database/lib/enums";
+
+import { UserCassa, UserCassaValues, UserRoles, UserRolesValues } from "@repo/database/lib/enums";
+import { textEnum } from "@repo/database/lib/utils";
+import { partitaIva } from "@repo/database/schemas/partita-iva.schema";
+import { subscription } from "@repo/database/schemas/subscription.schema";
 import { PRIMARY_COLOR } from "@repo/shared/const";
 import { relations } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-
 import { z } from "zod";
-
-import { UserCassa, UserCassaValues, UserRoles, UserRolesValues } from "../lib/enums";
-import { textEnum } from "../lib/utils";
-import { partitaIva } from "./partita-iva.schema";
-import { subscription } from "./subscription.schema";
 
 export const user = sqliteTable("user", {
   id: text("id").primaryKey(),

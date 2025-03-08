@@ -1,11 +1,10 @@
 import type { z } from "zod";
 
+import { user } from "@repo/database/schemas/auth.schema";
 import { relations, sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { v4 as randomUUID } from "uuid";
-
-import { user } from "./auth.schema";
 
 export const indirizzo = sqliteTable("indirizzi", {
   id: text("id", { length: 36 }).primaryKey().$defaultFn(() => randomUUID()),
