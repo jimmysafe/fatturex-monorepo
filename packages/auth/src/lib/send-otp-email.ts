@@ -6,6 +6,8 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendOtpSigninEmail(email: string, otp: string) {
   try {
+    // eslint-disable-next-line no-console
+    console.log("APP ENV: ", process.env.APP_ENV);
     if (process.env.APP_ENV !== "production") {
       // eslint-disable-next-line no-console
       console.log(`======== SIGNIN OTP: ${otp} ========`);
