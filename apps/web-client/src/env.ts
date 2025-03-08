@@ -20,7 +20,13 @@ export const env = createEnv({
   },
   client: {
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().min(1),
-    NEXT_PUBLIC_APP_URL: z.string().default(process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL}` : "http://localhost:3000"),
+    NEXT_PUBLIC_APP_URL: z.string().default(
+      process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL
+        ? `https://${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL}`
+        : process.env.NEXT_PUBLIC_VERCEL_URL
+          ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+          : "http://localhost:3000",
+    ),
     NEXT_PUBLIC_BUCKET_URL: z.string().min(1),
   },
   runtimeEnv: {
