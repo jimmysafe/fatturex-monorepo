@@ -1,10 +1,20 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": [
+  "globalPassThroughEnv": [
     "BETTER_AUTH_SECRET",
     "DATABASE_URL",
     "DATABASE_AUTH_TOKEN",
-    "RESEND_API_KEY"
+    "RESEND_API_KEY",
+    "OPENAPI_API_KEY",
+    "BLOB_READ_WRITE_TOKEN",
+    "STRIPE_SECRET_KEY",
+    "STRIPE_WEBHOOK_SECRET",
+    "KV_REST_API_TOKEN",
+    "KV_REST_API_URL",
+    "STS_URL",
+    "STS_CERTIFICATE",
+    "APP_ENV",
+    "VERCEL_ENV"
   ],
   "tasks": {
     "build": {
