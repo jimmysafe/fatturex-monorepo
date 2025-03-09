@@ -72,9 +72,19 @@ export default {
           "0%,70%,100%": { opacity: "1" },
           "20%,50%": { opacity: "0" },
         },
+        "marquee": {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
+        "marquee2": {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0%)" },
+        },
       },
       animation: {
         "caret-blink": "caret-blink 1.25s ease-out infinite",
+        "marquee": "marquee 25s linear infinite",
+        "marquee2": "marquee2 25s linear infinite",
       },
     },
   },
