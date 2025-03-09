@@ -1,3 +1,4 @@
+/* eslint-disable node/no-process-env */
 import { sendOtpSigninEmail } from "@repo/auth/lib/send-otp-email";
 import { db } from "@repo/database/client";
 import { getUserPublicDetails } from "@repo/database/queries/user";
@@ -6,7 +7,11 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 import { customSession, emailOTP } from "better-auth/plugins";
 
+const url = process.env.NEXT_PUBLIC_APP_URL;
+const baseHost = url?.match(/^https?:\/\/(?:[^:/\s.]+\.)*([^:/\s.]+\.[^:/\s.]+)(:\d+)?/i)?.[1];
+
 export const auth = betterAuth({
+  baseURL: process.env.NEXT_PUBLIC_APP_URL,
   session: {
     cookieCache: {
       enabled: true,
@@ -15,14 +20,17 @@ export const auth = betterAuth({
   },
   advanced: {
     cookiePrefix: "fatturex",
-    // crossSubDomainCookies: {
-    // 	enabled: true,
-    // },
-    // defaultCookieAttributes: {
-    // 	sameSite: 'none',
-    // 	secure: true,
-    // },
+    crossSubDomainCookies: {
+      enabled: true,
+      domain: `.${baseHost}`,
+    },
+    defaultCookieAttributes: {
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+    },
   },
+  trustedOrigins: [`*.${baseHost}`],
   database: drizzleAdapter(db, {
     provider: "sqlite",
   }),

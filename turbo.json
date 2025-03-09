@@ -1,9 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalEnv": [
+    "BETTER_AUTH_SECRET",
     "DATABASE_URL",
     "DATABASE_AUTH_TOKEN",
-    "NODE_ENV"
+    "RESEND_API_KEY"
   ],
   "tasks": {
     "build": {
