@@ -1,9 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@repo/ui/components/ui/avatar";
+import { cn } from "@repo/ui/lib/utils";
+
+import { container } from "@/lib/container";
 
 export function Testimonial() {
   return (
     <section className="bg-accent px-4 py-32">
-      <div className="container">
+      <div className={cn(container)}>
         <div className="flex flex-col items-center text-center">
           <div className="mb-8 flex items-center rounded-full bg-background p-1 shadow-md">
             <Avatar className="size-10">
