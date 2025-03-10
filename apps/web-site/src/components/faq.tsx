@@ -19,7 +19,7 @@ interface FaqProps {
 }
 
 export function Faq({
-  heading = "Frequently asked questions",
+  heading = "Domande frequenti",
   items = [
     {
       question: "What is a FAQ?",
@@ -44,7 +44,7 @@ export function Faq({
   ],
 }: FaqProps) {
   return (
-    <section className={cn("py-12 md:py-24", container)}>
+    <section id="faq" className={cn("py-12 md:py-24", container)}>
       <div className="container">
         <h1 className="mb-4 text-3xl font-semibold md:mb-11 md:text-5xl">
           {heading}

@@ -5,44 +5,44 @@ import { container } from "@/lib/container";
 
 export function Benefits() {
   return (
-    <section className={cn("py-12 md:py-24", container)}>
+    <section id="benefits" className={cn("py-12 md:py-24", container)}>
       <div className="container">
         <p className="mb-4 text-sm text-muted-foreground lg:text-base">
-          OUR VALUES
+          SEMPLICITÀ
         </p>
-        <h2 className="text-3xl font-medium lg:text-4xl">Why Choose Us?</h2>
+        <h2 className="max-w-md text-3xl font-medium lg:text-4xl">Semplifica la gestione della tua partita IVA</h2>
         <div className="mt-14 grid gap-6 lg:mt-20 lg:grid-cols-3">
           <div className="rounded-lg bg-accent p-5">
             <span className="mb-8 flex size-12 items-center justify-center rounded-full bg-background">
               <Timer className="size-6" />
             </span>
-            <h3 className="mb-2 text-xl font-medium">Performance</h3>
+            <h3 className="mb-2 text-xl font-medium">Affidabilitá</h3>
             <p className="leading-7 text-muted-foreground">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt
-              beatae tenetur totam aut blanditis ipsa quaerat neque eaque, atque
-              doloremque! Eligendi.
+              L'unica piattaforma che ti fornisce in tempo reale l'esatto calcolo fiscale.
+              <br />
+              Niente più sorprese su quello che dovrai versare l'anno successivo.
             </p>
           </div>
           <div className="rounded-lg bg-accent p-5">
             <span className="mb-8 flex size-12 items-center justify-center rounded-full bg-background">
               <ZoomIn className="size-6" />
             </span>
-            <h3 className="mb-2 text-xl font-medium">Quality</h3>
+            <h3 className="mb-2 text-xl font-medium">Precisione</h3>
             <p className="leading-7 text-muted-foreground">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt
-              beatae tenetur totam aut blanditis ipsa quaerat neque eaque, atque
-              doloremque! Eligendi.
+              Un algoritmo preciso al centesimo, preciso per ogni cassa previdenziale.
+              <br />
+              Un monitoraggio accuratissimo e in tempo reale. Verifica la copertura della tua cassa.
             </p>
           </div>
           <div className="rounded-lg bg-accent p-5">
             <span className="mb-8 flex size-12 items-center justify-center rounded-full bg-background">
               <Zap className="size-6" />
             </span>
-            <h3 className="mb-2 text-xl font-medium">Innovation</h3>
+            <h3 className="mb-2 text-xl font-medium">Semplicitá</h3>
             <p className="leading-7 text-muted-foreground">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt
-              beatae tenetur totam aut blanditis ipsa quaerat neque eaque, atque
-              doloremque! Eligendi.
+              Invia le tue fatture elettroniche e comunica con il sistema tessera sanitaria.
+              <br />
+              Tutto in automatico e con un semplice click.
             </p>
           </div>
         </div>

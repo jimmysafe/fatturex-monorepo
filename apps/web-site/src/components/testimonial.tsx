@@ -19,13 +19,11 @@ export function Testimonial() {
               <AvatarFallback>JS</AvatarFallback>
             </Avatar>
             <div className="mx-2 text-xs font-medium">
-              Trusted by visionary designers
+              Oltre 1000+ professionisti si fidano di noi
             </div>
           </div>
           <p className="max-w-4xl text-xl font-medium lg:text-2xl">
-            &ldquo;Lorem ipsum dolor sit amet consectetur adipisicing elit. Elig
-            doloremque mollitia fugiat omnis! Porro facilis quo animi
-            consequatur. Explicabo.&rdquo;
+            &ldquo;Gestire le fatture era sempre stato un incubo per me. Da quando uso Fatturex, non solo risparmio tempo prezioso nella creazione delle fatture, ma ho anche un controllo totale sul mio fatturato. La dashboard è intuitiva e mi permette di vedere subito quanto ho guadagnato e quanto devo accantonare per le tasse. È stato un vero game-changer per la mia attività.&rdquo;
           </p>
         </div>
       </div>

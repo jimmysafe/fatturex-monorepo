@@ -1,110 +1,85 @@
-const ITEMS = [
+import { Button } from "@repo/ui/components/ui/button";
+import { cn } from "@repo/ui/lib/utils";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+
+import { getAppUrl } from "@/lib/app-url";
+import { container } from "@/lib/container";
+
+const logos = [
   {
-    name: "Mercury",
-    src: "https://shadcnblocks.com/images/block/mainline/logos/mercury.svg",
-    width: 143,
-    height: 26,
-    href: "https://mercury.com",
+    id: "inps",
+    description: "INPS",
+    image: "/assets/casse/inps.svg",
   },
   {
-    name: "Watershed",
-    src: "https://shadcnblocks.com/images/block/mainline/logos/watershed.svg",
-    width: 154,
-    height: 31,
-    href: "https://watershed.com",
+    id: "enpap",
+    description: "enpap",
+    image: "/assets/casse/enpap.png",
   },
   {
-    name: "Retool",
-    src: "https://shadcnblocks.com/images/block/mainline/logos/retool.svg",
-    width: 113,
-    height: 22,
-    href: "https://retool.com",
+    id: "enpam",
+    description: "enpam",
+    image: "/assets/casse/enpam.png",
   },
   {
-    name: "Descript",
-    src: "https://shadcnblocks.com/images/block/mainline/logos/descript.svg",
-    width: 112,
-    height: 27,
-    href: "https://descript.com",
+    id: "enpapi",
+    description: "enpapi",
+    image: "/assets/casse/enpapi.png",
   },
   {
-    name: "Perplexity",
-    src: "https://shadcnblocks.com/images/block/mainline/logos/perplexity.svg",
-    width: 141,
-    height: 32,
-    href: "https://perplexity.ai",
+    id: "inarcassa",
+    description: "inarcassa",
+    image: "/assets/casse/inarcassa.png",
   },
   {
-    name: "Monzo",
-    src: "https://shadcnblocks.com/images/block/mainline/logos/monzo.svg",
-    width: 104,
-    height: 18,
-    href: "https://monzo.com",
-  },
-  {
-    name: "Ramp",
-    src: "https://shadcnblocks.com/images/block/mainline/logos/ramp.svg",
-    width: 105,
-    height: 28,
-    href: "https://ramp.com",
-  },
-  {
-    name: "Raycast",
-    src: "https://shadcnblocks.com/images/block/mainline/logos/raycast.svg",
-    width: 128,
-    height: 33,
-    href: "https://raycast.com",
-  },
-  {
-    name: "Arc",
-    src: "https://shadcnblocks.com/images/block/mainline/logos/arc.svg",
-    width: 90,
-    height: 28,
-    href: "https://arc.com",
+    id: "cassa-forense",
+    description: "cassa forense",
+    image: "/assets/casse/cassa-forense.png",
   },
 ];
 
 export function Casse() {
   return (
-    <section className="overflow-hidden bg-muted py-32 dark:bg-muted">
-      <div className="container text-center">
-        <h2 className="text-balance text-xl font-semibold tracking-tight lg:text-3xl">
-          Powering the world&apos;s best product teams.
-          <br />
-          <span className="text-muted-foreground">
-            From next-gen startups to established enterprises.
-          </span>
-        </h2>
-      </div>
-
-      <div className="relative mt-10">
-        <div className="flex w-full">
-          {/* First marquee group */}
-          <div className="flex shrink-0 animate-marquee items-center gap-12">
-            {ITEMS.map((logo, index) => (
-              <a href={logo.href} target="_blank" key={index} className="p-6">
-                <img
-                  src={logo.src}
-                  alt={logo.name}
-                  width={logo.width}
-                  height={logo.height}
-                  className="object-contain transition-opacity hover:opacity-70"
-                />
-              </a>
-            ))}
+    <section className={cn("py-12 md:py-20", container)}>
+      <div>
+        <div className="grid overflow-hidden rounded-xl border border-border bg-card md:grid-cols-2">
+          <div className="my-auto px-6 py-10 sm:px-10 sm:py-12 lg:p-16">
+            <div className="w-full md:max-w-md">
+              <h2 className="mb-4 text-2xl font-semibold lg:text-3xl">
+                Partita IVA a Regime Forfettario
+              </h2>
+              <p className="mb-6 text-lg">
+                Il nostro algoritmo di calcolo é disponibile per la maggiorparte dei regimi
+                forfettari.
+                {" "}
+                <br />
+                Calcola la tua cassa previdenziale in modo preciso e
+                affidabile.
+              </p>
+              <Link href={getAppUrl()}>
+                <Button className="w-full md:w-fit">
+                  <ArrowRight className="mr-2 size-5" />
+                  Inizia Ora
+                </Button>
+              </Link>
+            </div>
           </div>
-          {/* Second marquee group */}
-          <div className="flex shrink-0 animate-marquee items-center gap-12">
-            {ITEMS.map((logo, index) => (
-              <a href={logo.href} target="_blank" key={index} className="p-6">
-                <img
-                  src={logo.src}
-                  alt={logo.name}
-                  width={logo.width}
-                  height={logo.height}
-                  className="object-contain transition-opacity hover:opacity-70"
+          <div className="grid grid-cols-3 border-t border-border md:border-l md:border-t-0">
+            {logos.map(logo => (
+              <div
+                key={logo.id}
+                className="-mb-px flex items-center justify-center border-b border-r border-border p-5 sm:p-6 [&:nth-child(3n)]:border-r-0"
+              >
+                <Image
+                  src={logo.image}
+                  alt={logo.description}
+                  width={300}
+                  height={300}
+                  className="h-20 w-full object-contain object-center grayscale"
                 />
-              </a>
+              </div>
             ))}
           </div>
         </div>

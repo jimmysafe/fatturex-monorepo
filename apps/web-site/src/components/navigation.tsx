@@ -5,88 +5,54 @@ import { useState } from "react";
 import { Button } from "@repo/ui/components/ui/button";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@repo/ui/components/ui/navigation-menu";
 import { cn } from "@repo/ui/lib/utils";
-import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
+import { getAppUrl } from "@/lib/app-url";
 import { container } from "@/lib/container";
 
+import { Logo } from "./common/logo";
+
 const ITEMS = [
-  {
-    label: "Features",
-    href: "#",
-    dropdownItems: [
-      {
-        title: "Modern product teams",
-        href: "#",
-        description:
-          "Mainline is built on the habits that make the best product teams successful",
-      },
-      {
-        title: "Resource Allocation",
-        href: "#",
-        description: "Mainline your resource allocation and execution",
-      },
-    ],
-  },
-  { label: "About Us", href: "#" },
-  { label: "Pricing", href: "#" },
-  { label: "FAQ", href: "#" },
-  { label: "Contact", href: "#" },
+//   {
+//     label: "Features",
+//     href: "#",
+//     dropdownItems: [
+//       {
+//         title: "Modern product teams",
+//         href: "#",
+//         description:
+//           "Mainline is built on the habits that make the best product teams successful",
+//       },
+//       {
+//         title: "Resource Allocation",
+//         href: "#",
+//         description: "Mainline your resource allocation and execution",
+//       },
+//     ],
+//   },
+  { label: "Come Funziona", href: "#flow" },
+  { label: "Prezzi", href: "#pricing" },
+  { label: "FAQ", href: "#faq" },
 ];
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
     <div className="sticky top-6 z-10 px-4">
       <section className={cn("rounded-lg border border-gray-100 bg-card shadow-fade", container)}>
         <div className="flex items-center justify-between px-6 py-3">
-          <Link href="/" className="flex shrink-0 items-center gap-2">
-            <img src="https://shadcnblocks.com/images/block/block-1.svg" alt="logo" className="w-10" />
-          </Link>
+          <Logo iconOnly={false} />
 
           {/* Desktop Navigation */}
           <NavigationMenu className="max-lg:hidden">
             <NavigationMenuList>
               {ITEMS.map(link =>
-                link.dropdownItems ? (
-                  <NavigationMenuItem key={link.label} className="">
-                    <NavigationMenuTrigger className="bg-transparent! px-1.5 data-[state=open]:bg-accent/50">
-                      {link.label}
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <ul className="w-[400px] space-y-2 p-4">
-                        {link.dropdownItems.map(item => (
-                          <li key={item.title}>
-                            <NavigationMenuLink asChild>
-                              <a
-                                href={item.href}
-                                className="outline-hidden group flex select-none gap-4 rounded-md p-3 leading-none no-underline transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                              >
-                                <div className="transition-transform duration-300 group-hover:translate-x-1">
-                                  <div className="mb-1 text-sm font-medium leading-none">
-                                    {item.title}
-                                  </div>
-                                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                    {item.description}
-                                  </p>
-                                </div>
-                              </a>
-                            </NavigationMenuLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                ) : (
+                (
                   <NavigationMenuItem key={link.label} className="">
                     <a
                       href={link.href}
@@ -104,11 +70,11 @@ export function Navigation() {
 
           {/* Auth Buttons */}
           <div className="flex items-center gap-2.5">
-            <a href="/login" className="max-lg:hidden">
-              <Button variant="outline">
-                <span className="relative z-10">Login</span>
+            <Link href={getAppUrl()} className="max-lg:hidden">
+              <Button>
+                <span className="relative z-10">Inizia Ora</span>
               </Button>
-            </a>
+            </Link>
 
             {/* Hamburger Menu Button (Mobile Only) */}
             <button
@@ -148,57 +114,7 @@ export function Navigation() {
         >
           <nav className="flex flex-1 flex-col divide-y divide-border">
             {ITEMS.map(link =>
-              link.dropdownItems ? (
-                <div key={link.label} className="py-4 first:pt-0 last:pb-0">
-                  <button
-                    onClick={() =>
-                      setOpenDropdown(
-                        openDropdown === link.label ? null : link.label,
-                      )}
-                    className="flex w-full items-center justify-between text-base font-medium text-primary"
-                  >
-                    {link.label}
-                    <ChevronRight
-                      className={cn(
-                        "size-4 transition-transform duration-200",
-                        openDropdown === link.label ? "rotate-90" : "",
-                      )}
-                    />
-                  </button>
-                  <div
-                    className={cn(
-                      "overflow-hidden transition-all duration-300",
-                      openDropdown === link.label
-                        ? "mt-4 max-h-[1000px] opacity-100"
-                        : "max-h-0 opacity-0",
-                    )}
-                  >
-                    <div className="space-y-3 rounded-lg bg-muted/50 p-4">
-                      {link.dropdownItems.map(item => (
-                        <a
-                          key={item.title}
-                          href={item.href}
-                          className="group block rounded-md p-2 transition-colors hover:bg-accent"
-                          onClick={() => {
-                            setIsMenuOpen(false);
-                            setOpenDropdown(null);
-                          }}
-                        >
-                          <div className="transition-transform duration-200 group-hover:translate-x-1">
-                            <div className="font-medium text-primary">
-                              {item.title}
-                            </div>
-
-                            <p className="mt-1 text-sm text-muted-foreground">
-                              {item.description}
-                            </p>
-                          </div>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ) : (
+              (
                 <a
                   key={link.label}
                   href={link.href}

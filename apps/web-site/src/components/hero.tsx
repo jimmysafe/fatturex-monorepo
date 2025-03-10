@@ -1,7 +1,9 @@
 import { Button } from "@repo/ui/components/ui/button";
 import { cn } from "@repo/ui/lib/utils";
-import { Check, Play, Star, Zap } from "lucide-react";
+import { Check, Euro, Plus, TrendingDown, TrendingUp } from "lucide-react";
+import Link from "next/link";
 
+import { getAppUrl } from "@/lib/app-url";
 import { container } from "@/lib/container";
 
 export function Hero() {
@@ -10,12 +12,11 @@ export function Hero() {
       <div className="container max-w-[75rem]">
         <div className="flex gap-8">
           <div className="mx-auto max-w-[50rem] lg:max-w-full">
-            <h1 className="font-poppins mb-2.5 text-center text-5xl font-semibold leading-tight tracking-[-1px] sm:text-[3.375rem] md:text-[5.625rem] md:leading-[6.18rem] lg:text-left">
+            <h1 className="font-poppins mb-2.5 text-center text-5xl font-semibold leading-tight tracking-[-1px] sm:text-[3.375rem] md:text-[5.625rem] md:leading-[5.18rem] lg:text-left">
               Basta brutte sorprese.
             </h1>
-            <p className="mb-10 text-center text-2xl font-medium leading-9 lg:text-left">
-              We streamlines your ad management tasks, letting you focus on
-              achieving results more quickly.
+            <p className="mb-10 max-w-2xl text-center text-xl font-medium leading-9 lg:text-left">
+              Fatturex é la prima piattaforma che ti permette di gestire le tue fatture ed avere un calcolo preciso delle tasse da pagare.
             </p>
             <div className="flex flex-col items-center justify-center gap-5 sm:flex-row lg:justify-normal">
               <Button
@@ -23,21 +24,20 @@ export function Hero() {
                 asChild
                 className="h-fit w-full rounded-lg border-2 border-primary px-8 py-4 text-lg font-semibold sm:w-fit"
               >
-                <a href="#">Try for Free</a>
+                <Link href={getAppUrl()}>Prova Gratis</Link>
               </Button>
               <Button
                 variant="ghost"
                 asChild
                 className="h-fit w-full rounded-lg border-2 px-8 py-4 text-lg font-semibold hover:border-primary hover:bg-transparent sm:w-fit"
               >
-                <a href="#">Book a Demo</a>
+                <Link href={getAppUrl()}>Inizia Ora</Link>
               </Button>
             </div>
             <div className="mt-6 flex flex-wrap justify-center gap-7 lg:justify-normal">
               {[
-                "30-day free trial",
-                "No credit card required",
-                "Cancel anytime",
+                "Nessuna carta di credito richiesta",
+                "Disdici quando vuoi",
               ].map((text, i) => (
                 <div key={`${i}`} className="flex items-center gap-2">
                   <Check className="size-3 stroke-muted-foreground" />
@@ -62,13 +62,13 @@ export function Hero() {
                   />
                   <div>
                     <div className="flex items-center gap-1">
-                      <Zap className="size-4 fill-violet-600 stroke-violet-600" />
+                      <Plus className="size-4 stroke-violet-600" />
                       <div className="text-sm font-semibold text-violet-600">
-                        Rule
+                        2,540€
                       </div>
                     </div>
                     <div className="text-sm text-muted-foreground">
-                      Cancel low-performers
+                      Mario Rossi
                     </div>
                   </div>
                 </div>
@@ -77,24 +77,19 @@ export function Hero() {
                 <div className="flex size-full flex-col justify-between rounded-2xl bg-white p-2 shadow-lg">
                   <div className="size-5 rounded-full bg-black/10"></div>
                   <div className="flex h-[9.18rem] w-[9.375rem] rounded-2xl bg-[url('/images/block/placeholder-2.svg')] bg-cover bg-center bg-no-repeat">
-                    <Button
-                      variant="default"
-                      size="icon"
-                      className="m-auto flex size-10 rounded-full bg-black"
-                    >
-                      <Play className="m-auto fill-white" />
-                    </Button>
+                    <TrendingUp className="m-auto size-20 fill-white stroke-primary" />
                   </div>
                 </div>
               </div>
               <div className="col-[1_/_2] row-[3_/_5]">
                 <div className="flex size-full flex-col justify-between rounded-2xl bg-white p-2 shadow-lg">
                   <div className="size-5 rounded-full bg-black/10"></div>
-                  <div className="flex h-[9.18rem] w-[9.375rem] rounded-2xl bg-[url('/images/block/placeholder-3.svg')] bg-cover bg-center bg-no-repeat">
+                  <div className="flex h-[9.18rem] w-[9.375rem] flex-col gap-2 rounded-2xl bg-[url('/images/block/placeholder-3.svg')] bg-cover bg-center bg-no-repeat">
+                    <TrendingDown className="m-auto size-20 fill-white stroke-muted-foreground" />
                     <div className="m-2 mx-auto flex size-fit items-center gap-1 self-end rounded-xl bg-black p-2 text-white">
-                      <Star className="size-4" />
+                      <Euro className="size-4" />
                       <div className="text-xs font-semibold">
-                        Used in 700 ads
+                        Da Pagare
                       </div>
                     </div>
                   </div>
