@@ -4,6 +4,7 @@ import { z } from "zod";
 
 export const env = createEnv({
   server: {
+    NODE_ENV: z.string().default("development"),
     APP_ENV: z.string().default(process.env.VERCEL_ENV || "development"),
     DATABASE_URL: z.string().default("file:./dev.db"),
     DATABASE_AUTH_TOKEN: z.string().optional(),
@@ -28,6 +29,7 @@ export const env = createEnv({
     NEXT_PUBLIC_BUCKET_URL: z.string().min(1),
   },
   runtimeEnv: {
+    NODE_ENV: process.env.NODE_ENV,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     APP_ENV: process.env.APP_ENV,
     DATABASE_URL: process.env.DATABASE_URL,
