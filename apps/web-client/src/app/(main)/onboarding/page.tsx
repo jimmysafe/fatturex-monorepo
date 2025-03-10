@@ -23,7 +23,6 @@ import { GeneralInfo, OnboardingGeneralInfoSchema } from "@/components/modules/a
 import { Indirizzo, OnboardingIndirizzoSchema } from "@/components/modules/auth/onboarding-steps/indirizzo";
 import { Intro } from "@/components/modules/auth/onboarding-steps/intro";
 import { OnboardingPartitaIvaSchema, PartitaIva } from "@/components/modules/auth/onboarding-steps/partita-iva";
-import { env } from "@/env";
 import { getDataDiNascitaFromCf } from "@/lib/get-dob";
 import { mockOnboardingValues } from "@/lib/mock/onboarding-mock";
 import { onboardUser } from "@/server/actions/auth";
@@ -79,7 +78,8 @@ export default function Onboarding() {
           variant="default"
           onSubmit={onSubmit}
           onSubmitLoading={isPending}
-          defaultValues={env.NODE_ENV !== "production" ? mockOnboardingValues : undefined}
+          /* eslint-disable-next-line node/no-process-env */
+          defaultValues={process.env.NODE_ENV !== "production" ? mockOnboardingValues : undefined}
           steps={[
             {
               id: "intro",

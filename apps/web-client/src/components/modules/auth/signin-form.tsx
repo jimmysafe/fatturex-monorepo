@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { env } from "@/env";
 import { mockLoginValues } from "@/lib/mock/login-mock";
 
 export const SigninFormSchema = z.object({
@@ -27,7 +26,8 @@ export function SigninForm() {
   const router = useRouter();
   const form = useForm<z.infer<typeof SigninFormSchema>>({
     resolver: zodResolver(SigninFormSchema),
-    defaultValues: env.NODE_ENV !== "production" ? mockLoginValues : undefined,
+    /* eslint-disable-next-line node/no-process-env */
+    defaultValues: process.env.NODE_ENV !== "production" ? mockLoginValues : undefined,
   });
 
   async function handleSave(values: z.infer<typeof SigninFormSchema>) {
