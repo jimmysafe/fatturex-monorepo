@@ -7,7 +7,7 @@ import { FatturaBadges } from "@/components/modules/fatture/fattura-badges";
 import { FatturaConfetti } from "@/components/modules/fatture/fattura-confetti";
 import { FatturaIbanAlert } from "@/components/modules/fatture/fattura-iban-alert";
 import { FatturaNextSteps } from "@/components/modules/fatture/fattura-next-steps";
-import PdfPreview from "@/components/modules/fatture/pdf-preview";
+import { PdfPreview } from "@/components/modules/fatture/pdf-preview";
 import { _getPartitaIva } from "@/lib/cached/get-partita-iva";
 import { _getUserSubscription } from "@/lib/cached/get-subscription";
 import { session } from "@/lib/session";
@@ -23,6 +23,7 @@ export default async function FatturaPage({
   const { id } = await params;
   const { user } = await session();
   const fattura = await getFattura(id, user.id);
+  const partitaIva = await _getPartitaIva();
 
   if (!fattura)
     return notFound();
@@ -51,7 +52,7 @@ export default async function FatturaPage({
       <FatturaIbanAlert {...fattura} />
       <FatturaNextSteps fattura={fattura} subscriptionPromise={subscriptionPromise} />
       <div className="overflow-hidden rounded-md shadow-fade">
-        <PdfPreview fattura={fattura} />
+        <PdfPreview fattura={fattura} partitaIva={partitaIva} user={user} />
       </div>
     </section>
 
