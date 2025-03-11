@@ -1,5 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
   "globalPassThroughEnv": [
     "BETTER_AUTH_SECRET",
     "DATABASE_URL",
@@ -19,7 +20,6 @@
   "tasks": {
     "build": {
       "dependsOn": [
-        "@repo/database#migrate",
         "^build"
       ],
       "inputs": [
@@ -28,6 +28,20 @@
       ],
       "outputs": [
         ".next/**",
+        "!.next/cache/**"
+      ]
+    },
+    "web-client#build": {
+      "dependsOn": [
+        "@repo/database#migrate",
+        "^build"
+      ],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*"
+      ],
+      "outputs": [
+        "dist/**",
         "!.next/cache/**"
       ]
     },
