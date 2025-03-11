@@ -52,7 +52,6 @@ export const ricalcoloContabilita = authProcedure
   .input(YearParamSchema)
   .handler(async ({ input: { anno }, ctx: { user } }) => {
     const fattureSaldate = await getFattureSaldate(anno, user.id);
-    // @ts-expect-error usual type issue with enums
     const result = await ricalcoloCassa({ anno: Number(anno), userId: user.id, fattureSaldate });
     return result;
   });

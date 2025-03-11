@@ -71,7 +71,7 @@ export const fattura = sqliteTable("fatture", {
   soggettivo: decimal("soggettivo").notNull().default(0),
 
   idMarcaDaBollo: text("id_marca_da_bollo"),
-  metodoPagamento: textEnum("metodo_pagamento", FatturaMetodoPagamentoValues).$type<FatturaMetodoPagamentoType>().default(FatturaMetodoPagamento.CONTANTI),
+  metodoPagamento: textEnum("metodo_pagamento", FatturaMetodoPagamentoValues).$type<FatturaMetodoPagamentoType>().notNull().default(FatturaMetodoPagamento.CONTANTI),
   preferenzaDataSaldo: textEnum("preferenza_data_saldo", FatturaPreferenzaDataSaldoValues).$type<FatturaPreferenzaDataSaldoType>().notNull().default(FatturaPreferenzaDataSaldo.IMMEDIATO),
 
   stsStato: textEnum("sts_stato", StsStatoValues).$type<StsStatoType>().notNull().default(StsStato.NON_INVIATA),
