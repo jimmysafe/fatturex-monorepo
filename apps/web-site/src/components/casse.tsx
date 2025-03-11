@@ -51,12 +51,7 @@ export function Casse() {
                 Partita IVA a Regime Forfettario
               </h2>
               <p className="mb-6 text-lg">
-                Il nostro algoritmo di calcolo é disponibile per la maggiorparte dei regimi
-                forfettari.
-                {" "}
-                <br />
-                Calcola la tua cassa previdenziale in modo preciso e
-                affidabile.
+                Il nostro algoritmo di calcolo, preciso e affidabile, è disponibile per la maggior parte delle casse previdenziali.
               </p>
               <Link href={getAppUrl()}>
                 <Button className="w-full md:w-fit">
