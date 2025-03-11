@@ -44,9 +44,9 @@ export function Pricing() {
   });
 
   async function onSubscribe(priceId: string) {
-    const plan = plans.find(p => p.priceId === priceId)!;
-    if (plan.price.monthly === 0)
-      return router.push("/");
+    const plan = plans.find(p => p.priceId === priceId);
+    if (!plan)
+      return toast.error("Piano non trovato");
     return execute({ priceId: plan.priceId });
   }
 

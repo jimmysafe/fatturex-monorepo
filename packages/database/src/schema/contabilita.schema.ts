@@ -53,7 +53,7 @@ export const ContabilitaSchema = createSelectSchema(contabilita, {
 });
 export const CreateContabilitaSchema = createInsertSchema(contabilita, {
   enpapiTipoAgevolazione: z.nativeEnum(EnpapiTipoAgevolazione).optional(),
-}).omit({ id: true });
+}).omit({ id: true, userId: true, createdAt: true, updatedAt: true });
 
 export const UpdateContabilitaSchema = CreateContabilitaSchema.partial();
 

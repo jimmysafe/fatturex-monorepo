@@ -54,7 +54,7 @@ const useCredenzaDialogContext = () => {
   return context;
 };
 
-const CredenzaDialog = ({ children, ...props }: RootCredenzaDialogProps) => {
+const CredenzaDialog = ({ children,...props }: RootCredenzaDialogProps) => {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const CredenzaDialog = isDesktop ? Dialog : Drawer;
 
@@ -90,7 +90,7 @@ const CredenzaDialogClose = ({ className, children, ...props }: CredenzaDialogPr
   );
 };
 
-const CredenzaDialogContent = ({ className, children, ...props }: CredenzaDialogProps) => {
+const CredenzaDialogContent = ({ className, children, ...props }: CredenzaDialogProps & { closeable?: boolean }) => {
   const { isDesktop } = useCredenzaDialogContext();
   const CredenzaDialogContent = isDesktop ? DialogContent : DrawerContent;
 

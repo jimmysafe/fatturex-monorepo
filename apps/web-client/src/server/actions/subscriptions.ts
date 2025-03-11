@@ -24,7 +24,7 @@ export const createCheckoutSession = authProcedure
       throw new ZSAError("NOT_FOUND", "Piano non trovato");
 
     if (plan.price.monthly === 0) {
-      return initFreePlan(priceId, user);
+      return initFreePlan(priceId, user, { redirect: "/" });
     }
 
     const payload: Stripe.Checkout.SessionCreateParams = {

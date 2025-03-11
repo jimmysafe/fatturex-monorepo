@@ -4,6 +4,7 @@ import { and, eq } from "@repo/database/lib/utils";
 import { getFattureSaldate } from "@repo/database/queries/fatture";
 import { contabilita, CreateContabilitaSchema, UpdateContabilitaSchema } from "@repo/database/schema";
 import { IdParamSchema, YearParamSchema } from "@repo/shared/params-validators";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { ZSAError } from "zsa";
 
@@ -15,6 +16,7 @@ export const createContabilita = authProcedure
   .input(CreateContabilitaSchema)
   .handler(async ({ input, ctx: { user } }) => {
     const [inserted] = await db.insert(contabilita).values({ ...input, userId: user.id }).returning();
+    revalidatePath(`/${inserted.anno}`);
     return inserted;
   });
 
@@ -50,6 +52,7 @@ export const ricalcoloContabilita = authProcedure
   .input(YearParamSchema)
   .handler(async ({ input: { anno }, ctx: { user } }) => {
     const fattureSaldate = await getFattureSaldate(anno, user.id);
+    // @ts-expect-error usual type issue with enums
     const result = await ricalcoloCassa({ anno: Number(anno), userId: user.id, fattureSaldate });
     return result;
   });

@@ -140,7 +140,7 @@ export const onboardUser = createServerAction().input(OnboardingSchema.extend({ 
   if (!plan)
     throw new ZSAError("NOT_FOUND", "Piano non trovato");
 
-  const newSub = await initFreePlan(plan.priceId, { email: user.email, customerId: customer.id });
+  const newSub = await initFreePlan(plan.priceId, { id: user.id, email: user.email, customerId: customer.id });
   if (!newSub.id)
     throw new ZSAError("UNPROCESSABLE_CONTENT", "Errore creazione abbonamento");
 
