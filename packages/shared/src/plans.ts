@@ -25,7 +25,7 @@ export const plans: Plan[] = [
     numberOfInvoices: DEFAULT_NUMBER_OF_INVOICES,
     numberOfSearches: DEFAULT_NUMBER_OF_SEARCHES,
     fteEnabled: false,
-    priceId: "price_1QwJkS4RcDg2zL0lxR7wF6XF",
+    priceId: "price_1R1vc7QoWkXedzknTCxpet4i",
     actionLabel: "Inizia Ora",
     features: [
       "3 fatture al mese",
@@ -40,7 +40,7 @@ export const plans: Plan[] = [
     numberOfInvoices: 10,
     numberOfSearches: 3,
     fteEnabled: true,
-    priceId: "price_1Qw8SY4RcDg2zL0ljATeEpgy",
+    priceId: "price_1R1vevQoWkXedzknNGlNiF0S",
     actionLabel: "Acquista",
     features: [
       "10 Fatture al mese",
@@ -59,7 +59,7 @@ export const plans: Plan[] = [
     numberOfInvoices: -1,
     numberOfSearches: 8,
     fteEnabled: true,
-    priceId: "price_1Qw8UA4RcDg2zL0lkgCpxIZb",
+    priceId: "price_1R1vcmQoWkXedzknWhuOxY9D",
     actionLabel: "Acquista",
     features: [
       "Fatture illimitate",
