@@ -29,7 +29,11 @@ export function AnnoSwitcher(
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Anno contabilitá</SelectLabel>
-          {anniContabilita?.map(anno => <SelectItem key={anno} value={`${anno}`}>{anno}</SelectItem>)}
+          {anniContabilita.sort((a, b) => Number(b) - Number(a)).map(anno => (
+            <SelectItem key={anno} value={`${anno}`}>
+              {anno}
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>

@@ -23,9 +23,9 @@ INSERT INTO "user" ("id", "created_at", "updated_at", "role", "cassa", "nome", "
 ('ebe4b684-0153-4747-b142-886c893004a9', '2024-03-09 13:36:40.676', '2024-03-09 13:46:27.604303', 'user', 'Gestione Separata', 'Lucia', 'Aversano', 'aversano.lucia@gmail.com', NULL, 1, '1990-05-10', 1, 'Lucia Aversano');
 
 UPDATE "user"
-SET "created_at" = datetime(strftime('%s', "created_at"), 'unixepoch'),
-    "updated_at" = datetime(strftime('%s', "updated_at"), 'unixepoch'),
-    "data_di_nascita" = datetime(strftime('%s', "data_di_nascita"), 'unixepoch')
+SET "created_at" = strftime('%s', "created_at"),
+    "updated_at" = strftime('%s', "updated_at"),
+    "data_di_nascita" = strftime('%s', "data_di_nascita")
 WHERE "created_at" IS NOT NULL 
    OR "updated_at" IS NOT NULL
    OR "data_di_nascita" IS NOT NULL;
@@ -56,9 +56,9 @@ INSERT INTO "partita_iva" ("id", "created_at", "updated_at", "codice_fiscale", "
 
 
 UPDATE "partita_iva"
-SET "created_at" = datetime(strftime('%s', "created_at"), 'unixepoch'),
-    "updated_at" = datetime(strftime('%s', "updated_at"), 'unixepoch'),
-    "data_apertura" = datetime(strftime('%s', "data_apertura"), 'unixepoch')
+SET "created_at" = strftime('%s', "created_at"),
+    "updated_at" = strftime('%s', "updated_at"),
+    "data_apertura" = strftime('%s', "data_apertura")
 WHERE "created_at" IS NOT NULL 
    OR "updated_at" IS NOT NULL
    OR "data_apertura" IS NOT NULL;
@@ -91,8 +91,8 @@ INSERT INTO "indirizzi" ("id", "created_at", "updated_at", "indirizzo", "comune"
 ('f8fbba98-741f-4aa3-adc6-e3c297dc8c54', '2024-02-21 10:09:47.211', '2024-02-21 10:09:47.211', 'Via Varsavia 26', 'Roma', '00142', 'RM', 'IT', '5d737d1e-3824-4141-a013-5b15b7dec349', 0);
 
 UPDATE "indirizzi"
-SET "created_at" = datetime(strftime('%s', "created_at"), 'unixepoch'),
-    "updated_at" = datetime(strftime('%s', "updated_at"), 'unixepoch')
+SET "created_at" = strftime('%s', "created_at"),
+    "updated_at" = strftime('%s', "updated_at")
 WHERE "created_at" IS NOT NULL 
    OR "updated_at" IS NOT NULL
 
@@ -194,8 +194,8 @@ INSERT INTO "clienti" ("id", "created_at", "updated_at", "ragione_sociale", "ind
 ('ff18fa38-b0e6-447d-8eed-cc1767a772ac', '2023-06-10 14:48:26.206', '2023-06-10 14:48:26.206', 'SOCIAL CONTENT FACTORY SRL', 'socialcontentfactory@legalmail.it', 'socialcontentfactory@legalmail.it', 'Corso Italia 8', '20122', 'Milano', 'MI', 'IT', '08275460965', '', 'USAL8PV', '58d535b6-88c6-4f76-89a9-5e00c67821b0', '', '', '', '');
 
 UPDATE "clienti"
-SET "created_at" = datetime(strftime('%s', "created_at"), 'unixepoch'),
-    "updated_at" = datetime(strftime('%s', "updated_at"), 'unixepoch')
+SET "created_at" = strftime('%s', "created_at"),
+    "updated_at" = strftime('%s', "updated_at")
 WHERE "created_at" IS NOT NULL 
    OR "updated_at" IS NOT NULL
 
@@ -260,8 +260,8 @@ INSERT INTO "contabilita" ("id", "created_at", "updated_at", "anno", "fatturato"
 ('f9b8957b-1073-42ec-99ae-fea81fd44cac', '2023-04-06 16:11:12.271825', '2023-04-06 16:11:12.271825', 2023, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 3772.57, 0, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 606.06, 0.00, '75f12337-202c-4a0b-b8e4-ff0d671705e1', 0, 'NONE', 0.00);
 
 UPDATE "contabilita"
-SET "created_at" = datetime(strftime('%s', "created_at"), 'unixepoch'),
-    "updated_at" = datetime(strftime('%s', "updated_at"), 'unixepoch')
+SET "created_at" = strftime('%s', "created_at"),
+    "updated_at" = strftime('%s', "updated_at")
 WHERE "created_at" IS NOT NULL 
    OR "updated_at" IS NOT NULL
 
@@ -627,12 +627,12 @@ riga: 1 - colonna: 1420', 1, NULL, NULL, 'IT', NULL),
 ('74a34975-6d92-483b-8519-504624d86a7d', '2024-12-31 12:27:23.332', '2024-12-31 13:02:46.722', 'abeea77a-1c58-4587-9fb2-119f2ce6955e', '7749109e-f284-4291-9ac7-ed098c587899', 'aa983a37-a9b8-4d62-8295-321add7adce1', 15, '2024-12-31', '2024-12-31', 50.00, 50.00, 'Saldata', 0.00, 0, 8.79, 7.03, 0.00, 15.82, 15.82, 30.83, 50.00, 50.00, 33.50, 1.68, 33.50, 1.68, 0.00, 3.35, 3.35, 19.17, 0.00, 0.00, 0.00, '', 'Bonifico', '0', 'Non Inviata', NULL, 'In Elaborazione', '13702189474', NULL, 0, NULL, NULL, 'IT', NULL);
 
 UPDATE "fatture"
-SET "created_at" = datetime(strftime('%s', "created_at"), 'unixepoch'),
-    "updated_at" = datetime(strftime('%s', "updated_at"), 'unixepoch'),
-    "data_emissione" = datetime(strftime('%s', "data_emissione"), 'unixepoch'),
-    "data_saldo" = datetime(strftime('%s', "data_saldo"), 'unixepoch'),
-    "data_nota_credito" = datetime(strftime('%s', "data_nota_credito"), 'unixepoch'),
-    "data_invio_email" = datetime(strftime('%s', "data_invio_email"), 'unixepoch')
+SET "created_at" = strftime('%s', "created_at"),
+    "updated_at" = strftime('%s', "updated_at"),
+    "data_emissione" = strftime('%s', "data_emissione"),
+    "data_saldo" = strftime('%s', "data_saldo"),
+    "data_nota_credito" = strftime('%s', "data_nota_credito"),
+    "data_invio_email" = strftime('%s', "data_invio_email")
 WHERE "created_at" IS NOT NULL 
    OR "updated_at" IS NOT NULL
    OR "data_emissione" IS NOT NULL
