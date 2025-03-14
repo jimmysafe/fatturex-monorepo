@@ -39,6 +39,7 @@ export const createCheckoutSession = authProcedure
       success_url: `${env.NEXT_PUBLIC_APP_URL}/`,
       cancel_url: `${env.NEXT_PUBLIC_APP_URL}/`,
       locale: "it",
+      allow_promotion_codes: true,
       metadata: { userId: user.id, email: user.email },
     };
 

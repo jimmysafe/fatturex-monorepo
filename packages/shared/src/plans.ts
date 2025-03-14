@@ -54,7 +54,7 @@ export const plans: Plan[] = [
       },
       yearly: {
         id: process.env.NEXT_PUBLIC_STRIPE_PLAN_PRICE_ID_YEARLY_BASE!,
-        amount: 48.00,
+        amount: 49.99,
       },
     },
     numberOfInvoices: 10,
@@ -78,7 +78,7 @@ export const plans: Plan[] = [
       },
       yearly: {
         id: process.env.NEXT_PUBLIC_STRIPE_PLAN_PRICE_ID_YEARLY_PRO!,
-        amount: 70.00,
+        amount: 69.99,
       },
     },
     numberOfInvoices: -1,
