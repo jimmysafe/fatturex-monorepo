@@ -1,19 +1,16 @@
 "use client";
-
 import { useState } from "react";
 
-import { Button } from "@repo/ui/components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
 } from "@repo/ui/components/ui/navigation-menu";
 import { cn } from "@repo/ui/lib/utils";
-import Link from "next/link";
 
-import { getAppUrl } from "@/lib/app-url";
 import { container } from "@/lib/container";
 
+import { GoToAppButton } from "./common/go-to-app-button";
 import { Logo } from "./common/logo";
 
 const ITEMS = [
@@ -54,11 +51,7 @@ export function Navigation() {
 
             {/* Auth Buttons */}
             <div className="flex items-center gap-2.5">
-              <Link href={getAppUrl()} className="max-lg:hidden">
-                <Button>
-                  <span className="relative z-10">Inizia Ora</span>
-                </Button>
-              </Link>
+              <GoToAppButton text="Inizia Ora" trackLocation="Navigation" className="max-lg:hidden" />
 
               {/* Hamburger Menu Button (Mobile Only) */}
               <button

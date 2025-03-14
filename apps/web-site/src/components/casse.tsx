@@ -1,10 +1,9 @@
-import { Button } from "@repo/ui/components/ui/button";
 import { cn } from "@repo/ui/lib/utils";
 import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 
-import { getAppUrl } from "@/lib/app-url";
 import { container } from "@/lib/container";
+
+import { GoToAppButton } from "./common/go-to-app-button";
 
 const logos = [
   {
@@ -52,12 +51,9 @@ export function Casse() {
               <p className="mb-6 lg:text-lg">
                 Il nostro algoritmo di calcolo, preciso ed affidabile, è disponibile per la maggior parte delle casse previdenziali.
               </p>
-              <Link href={getAppUrl()}>
-                <Button className="w-full md:w-fit">
-                  <ArrowRight className="mr-2 size-5" />
-                  Inizia Ora
-                </Button>
-              </Link>
+              <GoToAppButton text="Inizia Ora" trackLocation="Casse" className="w-full md:w-fit">
+                <ArrowRight className="mr-2 size-5" />
+              </GoToAppButton>
             </div>
           </div>
           <div className="grid grid-cols-3 border-t border-border md:border-l md:border-t-0">

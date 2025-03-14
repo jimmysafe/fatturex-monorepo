@@ -1,10 +1,9 @@
-import { Button } from "@repo/ui/components/ui/button";
 import { cn } from "@repo/ui/lib/utils";
 import { Check, Euro, Plus, TrendingDown, TrendingUp } from "lucide-react";
-import Link from "next/link";
 
-import { getAppUrl } from "@/lib/app-url";
 import { container } from "@/lib/container";
+
+import { GoToAppButton } from "./common/go-to-app-button";
 
 export function Hero() {
   return (
@@ -19,20 +18,18 @@ export function Hero() {
               Fatturex é la prima piattaforma che ti permette di gestire le tue fatture ed avere un calcolo preciso delle tasse da pagare.
             </p>
             <div className="flex flex-row items-center justify-center gap-2 lg:justify-normal lg:gap-5">
-              <Button
+              <GoToAppButton
+                text="Prova Gratis"
+                trackLocation="Hero"
                 variant="default"
-                asChild
                 className="h-fit w-full rounded-lg border-2 border-primary px-8 py-4 font-semibold sm:w-fit lg:text-lg"
-              >
-                <Link href={getAppUrl()}>Prova Gratis</Link>
-              </Button>
-              <Button
+              />
+              <GoToAppButton
+                text="Inizia Ora"
+                trackLocation="Hero"
                 variant="ghost"
-                asChild
                 className="h-fit w-full rounded-lg border-2 px-8 py-4 font-semibold hover:border-primary hover:bg-transparent sm:w-fit lg:text-lg"
-              >
-                <Link href={getAppUrl()}>Inizia Ora</Link>
-              </Button>
+              />
             </div>
             <div className="mt-6 flex flex-wrap gap-2 lg:justify-normal lg:gap-7">
               {[
