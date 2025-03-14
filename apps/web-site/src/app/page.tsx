@@ -7,6 +7,9 @@ import { Hero } from "@/components/hero";
 import { Pricing } from "@/components/pricing";
 import { Testimonial } from "@/components/testimonial";
 
+export const dynamic = "force-static";
+export const revalidate = 600;
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
