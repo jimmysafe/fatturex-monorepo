@@ -23,22 +23,7 @@ export async function POST(request: Request) {
   const body = await request.json();
 
   // eslint-disable-next-line no-console
-  console.log("===================================");
-  // eslint-disable-next-line no-console
-  console.log("NOTIFICA ->", body.event, body.data.notification?.type, body.data.notification?.invoice_uuid);
-  // eslint-disable-next-line no-console
-  console.log("===================================");
-
-  const { error } = await resend.emails.send({
-    from: "Fatturex <info@basilico.studio>",
-    to: "ciaffardini.g@gmail.com",
-    subject: `Notifica INVIO - In Elaborazione`,
-    text: `La fattura è in elaborazione. \n\n ${JSON.stringify(body, null, 2)} `,
-  });
-
-  if (error) {
-    console.error("Errore nell'invio della mail", error);
-  }
+  console.log("NOTIFICA ->", body.event);
 
   if (body.event === "customer-notification") {
     const notification = body.data?.notification;
@@ -56,7 +41,7 @@ export async function POST(request: Request) {
         from: "Fatturex <info@basilico.studio>",
         to: "ciaffardini.g@gmail.com",
         subject: `Notifica di scarto`,
-        text: `La fattura ${notification.invoice_uuid} è stata scartata. \n\n ${JSON.stringify(body, null, 2)} `,
+        text: `La fattura è stata scartata. \n\n ${JSON.stringify(body, null, 2)} `,
       });
 
       if (error) {
