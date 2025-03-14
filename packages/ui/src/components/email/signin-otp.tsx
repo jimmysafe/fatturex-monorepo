@@ -97,7 +97,7 @@ interface SigninInOtpEmailProps {
   otp?: string;
 }
 
-const logoUrl = "https://app.fatturex.com/assets/logo.svg";
+const logoUrl = "https://app.fatturex.com/assets/logo.png";
 
 export function SigninInOtpEmail({
   otp,
@@ -109,8 +109,8 @@ export function SigninInOtpEmail({
         <Container style={container}>
           <Img
             src={logoUrl}
-            width="212"
-            height="88"
+            width="128"
+            height="128"
             alt="Fatturex"
             style={logo}
           />
