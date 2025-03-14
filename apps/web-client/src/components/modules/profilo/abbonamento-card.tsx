@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 
 import { SubscriptionStato } from "@repo/database/lib/enums";
-import { getPlanByLabel } from "@repo/shared/plans";
+import { getPlan } from "@repo/shared/plans";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@repo/ui/components/ui/card";
 import { Label } from "@repo/ui/components/ui/label";
 import { Progress } from "@repo/ui/components/ui/progress";
@@ -31,7 +31,7 @@ export async function Content() {
   const searchesLimit = subscription?.searchesLimit || 0;
   const searchesUsed = subscription?.searchesCount || 0;
 
-  const isProPlan = getPlanByLabel("Pro");
+  const isProPlan = getPlan(subscription?.planId)?.label === "Pro";
 
   return (
     <Card className="overflow-hidden">
