@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 
 import { SubscriptionStato } from "@repo/database/lib/enums";
+import { getPlanByLabel } from "@repo/shared/plans";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@repo/ui/components/ui/card";
 import { Label } from "@repo/ui/components/ui/label";
 import { Progress } from "@repo/ui/components/ui/progress";
@@ -29,6 +30,8 @@ export async function Content() {
   const invoicesUsed = subscription?.invoicesCount || 0;
   const searchesLimit = subscription?.searchesLimit || 0;
   const searchesUsed = subscription?.searchesCount || 0;
+
+  const isProPlan = !!getPlanByLabel("Pro");
 
   return (
     <Card className="overflow-hidden">
@@ -73,7 +76,7 @@ export async function Content() {
         <OpenCustomerPortalButton variant="ghost" className="w-full">
           Gestisci abbonamento
         </OpenCustomerPortalButton>
-        {subscription?.stato === SubscriptionStato.ATTIVO && (
+        {subscription?.stato === SubscriptionStato.ATTIVO && !isProPlan && (
           <UpgradeModal />
         )}
       </CardFooter>

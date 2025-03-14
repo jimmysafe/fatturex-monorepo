@@ -3,7 +3,7 @@ import { db } from "@repo/database/client";
 import { and, eq } from "@repo/database/lib/utils";
 import { subscription as _subscription, UpdateSubscriptionSchema } from "@repo/database/schema";
 import { IdParamSchema } from "@repo/shared/params-validators";
-import { plans } from "@repo/shared/plans";
+import { getPlan } from "@repo/shared/plans";
 import Stripe from "stripe";
 import { z } from "zod";
 import { ZSAError } from "zsa";
@@ -19,11 +19,11 @@ export const createCheckoutSession = authProcedure
   .createServerAction()
   .input(z.object({ priceId: z.string().min(1) }))
   .handler(async ({ input: { priceId }, ctx: { user } }) => {
-    const plan = plans.find(p => p.priceId === priceId);
+    const plan = getPlan(priceId);
     if (!plan)
       throw new ZSAError("NOT_FOUND", "Piano non trovato");
 
-    if (plan.price.monthly === 0) {
+    if (plan.price.monthly.amount === 0) {
       return initFreePlan(priceId, user, { redirect: "/" });
     }
 

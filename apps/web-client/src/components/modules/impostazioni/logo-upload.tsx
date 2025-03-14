@@ -4,7 +4,7 @@ import { useActionState, useEffect, useState } from "react";
 import type { getUserSubscription } from "@repo/database/queries/subscription";
 
 import { MAX_FILE_SIZE } from "@repo/shared/const";
-import { plans } from "@repo/shared/plans";
+import { getPlan } from "@repo/shared/plans";
 import { Button } from "@repo/ui/components/ui/button";
 import { Label } from "@repo/ui/components/ui/label";
 import { cn } from "@repo/ui/lib/utils";
@@ -45,8 +45,7 @@ export function LogoUpload({ user, subscription }: { user: Awaited<ReturnType<ty
     setFile(selectedFile ?? null);
   };
 
-  const sub = plans.find(p => p.priceId === subscription?.planId);
-  const hasSubscription = (sub?.price.monthly || 0) > 0;
+  const planLabel = getPlan(subscription?.planId)?.label;
 
   return (
     <form action={submitAction} className="flex max-w-36 flex-col gap-2">
@@ -79,7 +78,7 @@ export function LogoUpload({ user, subscription }: { user: Awaited<ReturnType<ty
 
       </div>
       {file
-        ? hasSubscription ? (
+        ? planLabel && (planLabel !== "Free") ? (
           <Button loading={isPending} size="sm" type="submit">
             { !isPending && <CheckIcon /> }
             Conferma

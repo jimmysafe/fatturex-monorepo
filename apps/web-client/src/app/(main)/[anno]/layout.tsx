@@ -1,3 +1,4 @@
+import { ChatButton } from "@/components/common/chat-button";
 import { GlobalAlerts } from "@/components/common/global-alerts";
 import { Navigation } from "@/components/common/navigation";
 import { _getAnniContabilita } from "@/lib/cached/get-anni-contabilita";
@@ -21,6 +22,7 @@ export default function AppLayout({
       <section className="py-10">
         {children}
       </section>
+      <ChatButton />
     </main>
   );
 }

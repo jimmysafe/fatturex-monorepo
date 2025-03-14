@@ -42,7 +42,7 @@ export const sendFatturaEmail = createServerAction()
       throw new ZSAError("NOT_FOUND", "Fattura non trovata");
 
     const { data, error } = await resend.emails.send({
-      from: "Fatturex <info@basilico.studio>",
+      from: "Fatturex <no-reply@fatturex.com>",
       to: [input.to],
       cc: [user.email],
       subject: `Fatturex - ${input.subject}`,

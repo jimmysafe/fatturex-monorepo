@@ -7,7 +7,7 @@ import { UserCassa } from "@repo/database/lib/enums";
 import { eq } from "@repo/database/lib/utils";
 import { codiceAteco, contabilita, user as dbUser, indirizzo, partitaIva } from "@repo/database/schema";
 import { IdParamSchema } from "@repo/shared/params-validators";
-import { plans } from "@repo/shared/plans";
+import { getPlanByLabel } from "@repo/shared/plans";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -136,11 +136,12 @@ export const onboardUser = createServerAction().input(OnboardingSchema.extend({ 
   if (!customer.id)
     throw new ZSAError("UNPROCESSABLE_CONTENT", "Errore creazione cliente");
 
-  const plan = plans.find(p => p.price.monthly === 0);
+  const plan = getPlanByLabel("Free");
+
   if (!plan)
     throw new ZSAError("NOT_FOUND", "Piano non trovato");
 
-  const newSub = await initFreePlan(plan.priceId, { id: user.id, email: user.email, customerId: customer.id });
+  const newSub = await initFreePlan(plan.price.monthly.id, { id: user.id, email: user.email, customerId: customer.id });
   if (!newSub.id)
     throw new ZSAError("UNPROCESSABLE_CONTENT", "Errore creazione abbonamento");
 

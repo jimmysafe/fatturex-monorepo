@@ -44,7 +44,7 @@ export async function POST(request: Request) {
       //  TODO: SEND SCARTO EMAIL
       // const resend = new Resend(env.RESEND_API_KEY);
       // const { error } = await resend.emails.send({
-      //   from: "Fatturex <info@basilico.studio>",
+      //   from: "Fatturex <no-reply@fatturex.com>",
       //   to: "ciaffardini.g@gmail.com",
       //   subject: `Notifica di scarto`,
       //   text: `La fattura è stata scartata. \n\n ${JSON.stringify(body, null, 2)} `,

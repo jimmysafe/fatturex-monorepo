@@ -45,7 +45,7 @@ export function AppProviders(props: { children: React.ReactNode }) {
         >
           {props.children}
         </ThemeProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
+        <ReactQueryDevtools initialIsOpen={false} position="left" />
       </QueryClientProvider>
     </I18nextProvider>
   );

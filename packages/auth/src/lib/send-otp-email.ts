@@ -12,7 +12,7 @@ export async function sendOtpSigninEmail(email: string, otp: string) {
       return { success: true };
     }
     const { data, error } = await resend.emails.send({
-      from: "Fatturex <info@basilico.studio>",
+      from: "Fatturex <no-reply@fatturex.com>",
       to: [email],
       subject: "Fatturex - Il tuo codice di accesso OTP",
       react: SigninInOtpEmail({ otp }),

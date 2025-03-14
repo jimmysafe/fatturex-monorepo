@@ -507,6 +507,9 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 20.17.24
       eslint:
         specifier: 'catalog:'
         version: 9.22.0(jiti@1.21.7)

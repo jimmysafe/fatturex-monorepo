@@ -1,13 +1,22 @@
+/* eslint-disable node/no-process-env */
+
+type PlanLabel = "Free" | "Base" | "Pro";
+
 export interface Plan {
-  label: string;
+  label: PlanLabel;
   numberOfInvoices: number;
   numberOfSearches: number;
   fteEnabled: boolean;
   price: {
-    monthly: number;
-    yearly: number;
+    monthly: {
+      id: string;
+      amount: number;
+    };
+    yearly: {
+      id: string;
+      amount: number;
+    };
   };
-  priceId: string;
   features: string[];
   actionLabel: string;
 }
@@ -19,13 +28,18 @@ export const plans: Plan[] = [
   {
     label: "Free",
     price: {
-      monthly: 0,
-      yearly: 0,
+      monthly: {
+        id: process.env.NEXT_PUBLIC_STRIPE_PLAN_PRICE_ID_MONTHLY_FREE!,
+        amount: 0,
+      },
+      yearly: {
+        id: process.env.NEXT_PUBLIC_STRIPE_PLAN_PRICE_ID_YEARLY_FREE!,
+        amount: 0,
+      },
     },
     numberOfInvoices: DEFAULT_NUMBER_OF_INVOICES,
     numberOfSearches: DEFAULT_NUMBER_OF_SEARCHES,
     fteEnabled: false,
-    priceId: "price_1R1vc7QoWkXedzknTCxpet4i",
     actionLabel: "Inizia Ora",
     features: [
       "3 fatture al mese",
@@ -34,13 +48,18 @@ export const plans: Plan[] = [
   {
     label: "Base",
     price: {
-      monthly: 4.99,
-      yearly: 4.99,
+      monthly: {
+        id: process.env.NEXT_PUBLIC_STRIPE_PLAN_PRICE_ID_MONTHLY_BASE!,
+        amount: 4.99,
+      },
+      yearly: {
+        id: process.env.NEXT_PUBLIC_STRIPE_PLAN_PRICE_ID_YEARLY_BASE!,
+        amount: 48.00,
+      },
     },
     numberOfInvoices: 10,
     numberOfSearches: 3,
     fteEnabled: true,
-    priceId: "price_1R1vevQoWkXedzknNGlNiF0S",
     actionLabel: "Acquista",
     features: [
       "10 Fatture al mese",
@@ -53,13 +72,18 @@ export const plans: Plan[] = [
   {
     label: "Pro",
     price: {
-      monthly: 6.99,
-      yearly: 6.99,
+      monthly: {
+        id: process.env.NEXT_PUBLIC_STRIPE_PLAN_PRICE_ID_MONTHLY_PRO!,
+        amount: 6.99,
+      },
+      yearly: {
+        id: process.env.NEXT_PUBLIC_STRIPE_PLAN_PRICE_ID_YEARLY_PRO!,
+        amount: 70.00,
+      },
     },
     numberOfInvoices: -1,
     numberOfSearches: 8,
     fteEnabled: true,
-    priceId: "price_1R1vcmQoWkXedzknWhuOxY9D",
     actionLabel: "Acquista",
     features: [
       "Fatture illimitate",
@@ -71,3 +95,15 @@ export const plans: Plan[] = [
     ],
   },
 ];
+
+export function getPlan(planId?: string) {
+  return plans.find(plan => (plan.price.monthly.id === planId || plan.price.yearly.id === planId));
+}
+
+export function getPlanByLabel(label: PlanLabel) {
+  return plans.find(plan => plan.label === label);
+}
+
+export function getPlanIndex(planId?: string) {
+  return plans.findIndex(plan => (plan.price.monthly.id === planId || plan.price.yearly.id === planId));
+}

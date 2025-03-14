@@ -4,7 +4,7 @@ import { db } from "@repo/database/client";
 import { SubscriptionStato } from "@repo/database/lib/enums";
 import { eq } from "@repo/database/lib/utils";
 import { subscription as _subscription, user as _user } from "@repo/database/schema";
-import { DEFAULT_NUMBER_OF_INVOICES, DEFAULT_NUMBER_OF_SEARCHES, plans } from "@repo/shared/plans";
+import { DEFAULT_NUMBER_OF_INVOICES, DEFAULT_NUMBER_OF_SEARCHES, getPlan } from "@repo/shared/plans";
 import { isEqual } from "date-fns";
 import Stripe from "stripe";
 
@@ -15,7 +15,7 @@ const stripe = new Stripe(env.STRIPE_SECRET_KEY);
 export async function handleSubscriptionEvent(event: Stripe.Event, type: "created" | "updated" | "deleted") {
   const subscription = event.data.object as Stripe.Subscription & { plan: Stripe.Plan };
 
-  const plan = plans.find(p => p.priceId === subscription.plan.id);
+  const plan = getPlan(subscription.plan.id);
   if (!plan)
     throw new Error("Plan not found");
 
@@ -34,7 +34,7 @@ export async function handleSubscriptionEvent(event: Stripe.Event, type: "create
     const payload = {
       email: customer.email,
       subscriptionId: subscription.id,
-      planId: plan.priceId,
+      planId: subscription.plan.id,
       stato: SubscriptionStato.ATTIVO,
       plan: plan.label,
       fteEnabled: plan.fteEnabled,
@@ -76,7 +76,7 @@ export async function handleSubscriptionEvent(event: Stripe.Event, type: "create
       .set({
         email: customer.email,
         subscriptionId: subscription.id,
-        planId: plan.priceId,
+        planId: subscription.plan.id,
         stato: subscription.status === "past_due" ? SubscriptionStato.PAGAMENTO_RICHIESTO : SubscriptionStato.ATTIVO,
         plan: plan.label,
         fteEnabled: subscription.status !== "active" ? false : plan.fteEnabled,
