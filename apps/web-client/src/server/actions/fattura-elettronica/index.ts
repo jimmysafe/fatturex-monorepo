@@ -195,6 +195,7 @@ export const fteInvioFattura = fteActiveProcedure
     await db.update(fattura).set({
       fteStato: FteStato.PROCESSING,
       fteId: result.data?.uuid,
+      fteError: null,
     }).where(
       and(eq(fattura.id, id), eq(fattura.userId, user.id)),
     );
