@@ -97,7 +97,7 @@ interface SigninInOtpEmailProps {
   otp?: string;
 }
 
-const logoUrl = "https://upload.wikimedia.org/wikipedia/commons/8/85/Logo-Test.png";
+const logoUrl = "https://app.fatturex.com/assets/logo.svg";
 
 export function SigninInOtpEmail({
   otp,
