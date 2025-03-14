@@ -31,58 +31,60 @@ export function Navigation() {
         <div className="flex items-center justify-between py-3 lg:px-6">
           <Logo iconOnly={false} />
 
-          {/* Desktop Navigation */}
-          <NavigationMenu className="max-lg:hidden">
-            <NavigationMenuList>
-              {ITEMS.map(link =>
-                (
-                  <NavigationMenuItem key={link.label} className="">
-                    <a
-                      href={link.href}
-                      className={cn(
-                        "relative bg-transparent px-1.5 text-sm font-medium text-muted-foreground",
-                      )}
-                    >
-                      {link.label}
-                    </a>
-                  </NavigationMenuItem>
-                ),
-              )}
-            </NavigationMenuList>
-          </NavigationMenu>
+          <div className="flex items-center gap-6">
+            {/* Desktop Navigation */}
+            <NavigationMenu className="max-lg:hidden">
+              <NavigationMenuList>
+                {ITEMS.map(link =>
+                  (
+                    <NavigationMenuItem key={link.label} className="">
+                      <a
+                        href={link.href}
+                        className={cn(
+                          "relative bg-transparent px-1.5 text-sm font-medium text-muted-foreground",
+                        )}
+                      >
+                        {link.label}
+                      </a>
+                    </NavigationMenuItem>
+                  ),
+                )}
+              </NavigationMenuList>
+            </NavigationMenu>
 
-          {/* Auth Buttons */}
-          <div className="flex items-center gap-2.5">
-            <Link href={getAppUrl()} className="max-lg:hidden">
-              <Button>
-                <span className="relative z-10">Inizia Ora</span>
-              </Button>
-            </Link>
+            {/* Auth Buttons */}
+            <div className="flex items-center gap-2.5">
+              <Link href={getAppUrl()} className="max-lg:hidden">
+                <Button>
+                  <span className="relative z-10">Inizia Ora</span>
+                </Button>
+              </Link>
 
-            {/* Hamburger Menu Button (Mobile Only) */}
-            <button
-              className="relative flex size-8 text-muted-foreground lg:hidden"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <span className="sr-only">Open main menu</span>
-              <div className="absolute left-1/2 top-1/2 block w-[18px] -translate-x-1/2 -translate-y-1/2">
-                <span
-                  aria-hidden="true"
-                  className={`absolute block h-0.5 w-full rounded-full bg-current transition duration-500 ease-in-out ${isMenuOpen ? "rotate-45" : "-translate-y-1.5"}`}
-                >
-                </span>
-                <span
-                  aria-hidden="true"
-                  className={`absolute block h-0.5 w-full rounded-full bg-current transition duration-500 ease-in-out ${isMenuOpen ? "opacity-0" : ""}`}
-                >
-                </span>
-                <span
-                  aria-hidden="true"
-                  className={`absolute block h-0.5 w-full rounded-full bg-current transition duration-500 ease-in-out ${isMenuOpen ? "-rotate-45" : "translate-y-1.5"}`}
-                >
-                </span>
-              </div>
-            </button>
+              {/* Hamburger Menu Button (Mobile Only) */}
+              <button
+                className="relative flex size-8 text-muted-foreground lg:hidden"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                <span className="sr-only">Open main menu</span>
+                <div className="absolute left-1/2 top-1/2 block w-[18px] -translate-x-1/2 -translate-y-1/2">
+                  <span
+                    aria-hidden="true"
+                    className={`absolute block h-0.5 w-full rounded-full bg-current transition duration-500 ease-in-out ${isMenuOpen ? "rotate-45" : "-translate-y-1.5"}`}
+                  >
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className={`absolute block h-0.5 w-full rounded-full bg-current transition duration-500 ease-in-out ${isMenuOpen ? "opacity-0" : ""}`}
+                  >
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className={`absolute block h-0.5 w-full rounded-full bg-current transition duration-500 ease-in-out ${isMenuOpen ? "-rotate-45" : "translate-y-1.5"}`}
+                  >
+                  </span>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
 
