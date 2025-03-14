@@ -31,7 +31,7 @@ export async function Content() {
   const searchesLimit = subscription?.searchesLimit || 0;
   const searchesUsed = subscription?.searchesCount || 0;
 
-  const isProPlan = !!getPlanByLabel("Pro");
+  const isProPlan = getPlanByLabel("Pro");
 
   return (
     <Card className="overflow-hidden">
@@ -76,7 +76,7 @@ export async function Content() {
         <OpenCustomerPortalButton variant="ghost" className="w-full">
           Gestisci abbonamento
         </OpenCustomerPortalButton>
-        {subscription?.stato === SubscriptionStato.ATTIVO && !isProPlan && (
+        {((subscription?.stato === SubscriptionStato.ATTIVO) && !isProPlan) && (
           <UpgradeModal />
         )}
       </CardFooter>
