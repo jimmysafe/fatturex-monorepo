@@ -25,7 +25,7 @@ export function GoToAppButton({ text, children, trackLocation, ...props }: Butto
         onClick={handleTrack}
       >
         {children}
-        Inizia Ora
+        {text}
       </Button>
     </Link>
   );

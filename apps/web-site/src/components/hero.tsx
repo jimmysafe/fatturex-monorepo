@@ -17,7 +17,7 @@ export function Hero() {
             <p className="leading-1 mb-10 max-w-2xl text-left font-medium lg:text-xl lg:leading-9">
               Fatturex é la prima piattaforma che ti permette di gestire le tue fatture ed avere un calcolo preciso delle tasse da pagare.
             </p>
-            <div className="flex flex-row items-center justify-center gap-2 lg:justify-normal lg:gap-5">
+            <div className="flex flex-row items-center justify-normal gap-2 lg:gap-5">
               <GoToAppButton
                 text="Prova Gratis"
                 trackLocation="Hero"
