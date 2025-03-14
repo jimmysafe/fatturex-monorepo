@@ -4,6 +4,9 @@ import { db } from "@repo/database/client";
 import { FteStato } from "@repo/database/lib/enums";
 import { and, eq } from "@repo/database/lib/utils";
 import { fattura } from "@repo/database/schema";
+import { Resend } from "resend";
+
+import { env } from "@/env";
 
 async function updateFattura(fteId: string, stato: FteStatoType, error?: string) {
   await db.update(fattura).set({
@@ -15,6 +18,8 @@ async function updateFattura(fteId: string, stato: FteStatoType, error?: string)
 }
 
 export async function POST(request: Request) {
+  const resend = new Resend(env.RESEND_API_KEY);
+
   const body = await request.json();
 
   // eslint-disable-next-line no-console
@@ -23,6 +28,17 @@ export async function POST(request: Request) {
   console.log("NOTIFICA ->", body.event, body.data.notification?.type, body.data.notification?.invoice_uuid);
   // eslint-disable-next-line no-console
   console.log("===================================");
+
+  const { error } = await resend.emails.send({
+    from: "Fatturex <info@basilico.studio>",
+    to: "ciaffardini.g@gmail.com",
+    subject: `Notifica INVIO - In Elaborazione`,
+    text: `La fattura è in elaborazione. \n\n ${JSON.stringify(body, null, 2)} `,
+  });
+
+  if (error) {
+    console.error("Errore nell'invio della mail", error);
+  }
 
   if (body.event === "customer-notification") {
     const notification = body.data?.notification;
@@ -35,6 +51,17 @@ export async function POST(request: Request) {
         FteStato.SCARTATA,
         notification.message?.lista_errori?.Errore?.Descrizione,
       );
+
+      const { error } = await resend.emails.send({
+        from: "Fatturex <info@basilico.studio>",
+        to: "ciaffardini.g@gmail.com",
+        subject: `Notifica di scarto`,
+        text: `La fattura ${notification.invoice_uuid} è stata scartata. \n\n ${JSON.stringify(body, null, 2)} `,
+      });
+
+      if (error) {
+        console.error("Errore nell'invio della mail", error);
+      }
     }
     if (notification.type === "RC") {
       await updateFattura(

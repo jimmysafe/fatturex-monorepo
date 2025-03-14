@@ -40,7 +40,7 @@ export function FatturaStatoBadge({ stato }: { stato: FatturaStatoType }) {
 export function FatturaFteStatoBadge({ stato }: { stato: FteStatoType }) {
   return (
     <Badge variant={
-      stato === FteStato.ANNULLATA
+      stato === FteStato.ANNULLATA || stato === FteStato.SCARTATA
         ? "destructive"
         : stato === FteStato.INVIATA
           ? "success"

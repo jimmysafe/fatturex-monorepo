@@ -188,6 +188,8 @@ export const fteInvioFattura = fteActiveProcedure
     });
 
     const result = await res.json() as z.infer<typeof FteResponseSchema>;
+    // eslint-disable-next-line no-console
+    console.log("ACTION INVIO DATA:", JSON.stringify(result.data, null, 2));
 
     if (!res.ok || result.error)
       throw new ZSAError("UNPROCESSABLE_CONTENT", result?.message || "Errore durante l'invio della fattura.");

@@ -10,6 +10,7 @@ import { CreateFatturaSchema } from "@repo/database/schema";
 import { Button } from "@repo/ui/components/ui/button";
 import { FormFields } from "@repo/ui/components/ui/form-fields";
 import { Separator } from "@repo/ui/components/ui/separator";
+import { Skeleton } from "@repo/ui/components/ui/skeleton";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight } from "lucide-react";
 
@@ -38,7 +39,7 @@ export function Impostazioni() {
     : sommaArticoli(form.watch("articoli") ?? []) > 77.47;
 
   if (isLoading)
-    return <></>;
+    return <Skeleton className="h-56" />;
 
   return (
     <div className="space-y-4">
