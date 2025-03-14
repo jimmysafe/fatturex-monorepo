@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { FatturaActions } from "@/components/modules/fatture/fattura-actions";
 import { FatturaBadges } from "@/components/modules/fatture/fattura-badges";
 import { FatturaConfetti } from "@/components/modules/fatture/fattura-confetti";
+import { FatturaFteErrorAlert } from "@/components/modules/fatture/fattura-fte-error-alert";
 import { FatturaIbanAlert } from "@/components/modules/fatture/fattura-iban-alert";
 import { FatturaNextSteps } from "@/components/modules/fatture/fattura-next-steps";
 import { PdfPreview } from "@/components/modules/fatture/pdf-preview";
@@ -49,6 +50,7 @@ export default async function FatturaPage({
         </div>
         <FatturaActions fattura={fattura} subscriptionPromise={subscriptionPromise} partitaIvaPromise={partitaIvaPromise} />
       </div>
+      <FatturaFteErrorAlert {...fattura} />
       <FatturaIbanAlert {...fattura} />
       <FatturaNextSteps fattura={fattura} subscriptionPromise={subscriptionPromise} />
       <div className="overflow-hidden rounded-md shadow-fade">
