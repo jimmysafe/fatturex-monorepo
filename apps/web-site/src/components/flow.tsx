@@ -7,9 +7,9 @@ import { container } from "@/lib/container";
 
 export function Flow() {
   return (
-    <section id="flow" className={cn("py-12 md:py-24", container)}>
+    <section id="flow" className={cn("py-12 md:py-24 scroll-mt-20", container)}>
       <div className="lg:container">
-        <div className="mb-16 max-w-xl px-8 lg:px-0">
+        <div className="mb-16 max-w-xl">
           <Badge variant="outline">Come funziona</Badge>
           <h2 className="mb-3 mt-6 text-balance text-2xl font-medium md:text-4xl">
             Un gestionale facile, preciso e affidabile.
@@ -28,7 +28,7 @@ export function Flow() {
                 value="tab-1"
                 className="group pointer-events-none lg:pointer-events-auto"
               >
-                <div className="flex gap-4 rounded-md px-8 py-4 text-left hover:bg-muted lg:block lg:px-4">
+                <div className="flex gap-4 rounded-md py-4 text-left hover:bg-muted lg:block lg:px-4">
                   <div className="flex flex-col items-center lg:contents">
                     <span className="flex size-7 shrink-0 items-center justify-center rounded-full border bg-background font-mono text-xs font-medium lg:group-data-[state=active]:bg-primary lg:group-data-[state=active]:text-background lg:group-data-[state=active]:ring lg:group-data-[state=active]:ring-muted-foreground/40">
                       1
@@ -44,7 +44,7 @@ export function Flow() {
                     </p>
                   </div>
                 </div>
-                <div className="mt-6 block border bg-muted/50 px-4 py-6 lg:hidden">
+                <div className="mt-6 block lg:hidden">
                   <div className="aspect-video">
                     <Image
                       src="/assets/screenshots/dashboard.png"
@@ -60,7 +60,7 @@ export function Flow() {
                 value="tab-2"
                 className="group pointer-events-none lg:pointer-events-auto"
               >
-                <div className="flex gap-4 rounded-md px-8 py-4 text-left hover:bg-muted lg:block lg:px-4">
+                <div className="flex gap-4 rounded-md py-4 text-left hover:bg-muted lg:block lg:px-4">
                   <div className="flex flex-col items-center lg:contents">
                     <span className="flex size-7 shrink-0 items-center justify-center rounded-full border bg-background font-mono text-xs font-medium group-data-[state=active]:bg-primary group-data-[state=active]:text-background group-data-[state=active]:ring group-data-[state=active]:ring-muted-foreground/40">
                       2
@@ -76,7 +76,7 @@ export function Flow() {
                     </p>
                   </div>
                 </div>
-                <div className="mt-6 block border bg-muted/50 px-4 py-6 lg:hidden">
+                <div className="mt-6 block lg:hidden">
                   <div className="aspect-video">
                     <Image
                       src="/assets/screenshots/nuova-fattura.png"
@@ -92,7 +92,7 @@ export function Flow() {
                 value="tab-3"
                 className="group pointer-events-none lg:pointer-events-auto"
               >
-                <div className="flex gap-4 rounded-md px-8 py-4 text-left hover:bg-muted lg:block lg:px-4">
+                <div className="flex gap-4 rounded-md py-4 text-left hover:bg-muted lg:block lg:px-4">
                   <div className="flex flex-col items-center lg:contents">
                     <span className="flex size-7 shrink-0 items-center justify-center rounded-full border bg-background font-mono text-xs font-medium group-data-[state=active]:bg-primary group-data-[state=active]:text-background group-data-[state=active]:ring group-data-[state=active]:ring-muted-foreground/40">
                       3
@@ -108,7 +108,7 @@ export function Flow() {
                     </p>
                   </div>
                 </div>
-                <div className="mt-6 block border bg-muted/50 px-4 py-6 lg:hidden">
+                <div className="mt-6 block lg:hidden">
                   <div className="aspect-video">
                     <Image
                       src="/assets/screenshots/lista-fatture.png"
@@ -124,7 +124,7 @@ export function Flow() {
                 value="tab-4"
                 className="group pointer-events-none lg:pointer-events-auto"
               >
-                <div className="flex gap-4 rounded-md px-8 py-4 text-left hover:bg-muted lg:block lg:px-4">
+                <div className="flex gap-4 rounded-md py-4 text-left hover:bg-muted lg:block lg:px-4">
                   <div className="flex flex-col items-center lg:contents">
                     <span className="flex size-7 shrink-0 items-center justify-center rounded-full border bg-background font-mono text-xs font-medium group-data-[state=active]:bg-primary group-data-[state=active]:text-background group-data-[state=active]:ring group-data-[state=active]:ring-muted-foreground/40">
                       4
@@ -140,7 +140,7 @@ export function Flow() {
                     </p>
                   </div>
                 </div>
-                <div className="mt-6 block border bg-muted/50 px-4 py-6 lg:hidden">
+                <div className="mt-6 block lg:hidden">
                   <div className="aspect-video">
                     <Image
                       src="/assets/screenshots/fattura.png"

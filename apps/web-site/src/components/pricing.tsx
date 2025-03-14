@@ -20,7 +20,7 @@ import { container } from "@/lib/container";
 export function Pricing() {
   const [isAnnually, setIsAnnually] = useState(false);
   return (
-    <section id="pricing" className={cn("py-12 md:py-24", container)}>
+    <section id="pricing" className={cn("py-12 md:py-24 scroll-mt-20", container)}>
       <div className="container">
         <div className="mx-auto flex max-w-screen-xl flex-col gap-6">
           <h2 className="text-pretty text-4xl font-bold lg:text-6xl">

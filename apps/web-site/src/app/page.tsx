@@ -1,6 +1,5 @@
 import { Benefits } from "@/components/benefits";
 import { Casse } from "@/components/casse";
-import { Faq } from "@/components/faq";
 import { Flow } from "@/components/flow";
 import { Hero } from "@/components/hero";
 import { Pricing } from "@/components/pricing";
@@ -12,10 +11,10 @@ export default function Home() {
       <Hero />
       <Casse />
       <Flow />
-      <Benefits />
       <Testimonial />
       <Pricing />
-      <Faq />
+      <Benefits />
+      {/* <Faq /> */}
     </main>
   );
 }

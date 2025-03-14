@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@repo/ui/index.css";
 
+import "@/app/index.css";
 import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
 

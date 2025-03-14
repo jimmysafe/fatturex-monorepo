@@ -17,26 +17,9 @@ import { container } from "@/lib/container";
 import { Logo } from "./common/logo";
 
 const ITEMS = [
-//   {
-//     label: "Features",
-//     href: "#",
-//     dropdownItems: [
-//       {
-//         title: "Modern product teams",
-//         href: "#",
-//         description:
-//           "Mainline is built on the habits that make the best product teams successful",
-//       },
-//       {
-//         title: "Resource Allocation",
-//         href: "#",
-//         description: "Mainline your resource allocation and execution",
-//       },
-//     ],
-//   },
-  { label: "Come Funziona", href: "#flow" },
+  { label: "Funzionalità", href: "#flow" },
   { label: "Prezzi", href: "#pricing" },
-  { label: "FAQ", href: "#faq" },
+  // { label: "FAQ", href: "#faq" },
 ];
 
 export function Navigation() {
@@ -45,7 +28,7 @@ export function Navigation() {
   return (
     <div className="sticky top-6 z-10 px-4">
       <section className={cn("rounded-lg border border-gray-100 bg-card shadow-fade", container)}>
-        <div className="flex items-center justify-between px-6 py-3">
+        <div className="flex items-center justify-between py-3 lg:px-6">
           <Logo iconOnly={false} />
 
           {/* Desktop Navigation */}
@@ -106,7 +89,7 @@ export function Navigation() {
         {/*  Mobile Menu Navigation */}
         <div
           className={cn(
-            "fixed inset-x-0 top-[calc(100%+1rem)] flex flex-col rounded-2xl border bg-background p-6 transition-all duration-300 ease-in-out lg:hidden",
+            "fixed inset-x-0 top-[calc(66px+1.5rem)] mx-4 bg-card flex flex-col rounded-lg border border-gray-100 p-6 transition-all duration-300 ease-in-out lg:hidden z-50",
             isMenuOpen
               ? "visible translate-y-0 opacity-100"
               : "invisible -translate-y-4 opacity-0",

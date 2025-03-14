@@ -5,7 +5,7 @@ import { container } from "@/lib/container";
 
 export function Benefits() {
   return (
-    <section id="benefits" className={cn("py-12 md:py-24", container)}>
+    <section id="benefits" className={cn("py-12 md:py-24 scroll-mt-20", container)}>
       <div className="container">
         <p className="mb-4 text-sm text-muted-foreground lg:text-base">
           SEMPLICITÀ

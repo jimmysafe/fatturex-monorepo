@@ -12,29 +12,29 @@ export function Hero() {
       <div className="container max-w-[75rem]">
         <div className="flex gap-8">
           <div className="mx-auto max-w-[50rem] lg:max-w-full">
-            <h1 className="font-poppins mb-2.5 text-center text-5xl font-semibold leading-tight tracking-[-1px] sm:text-[3.375rem] md:text-[5.625rem] md:leading-[5.18rem] lg:text-left">
+            <h1 className="font-poppins leading-1 mb-4 text-left text-5xl font-semibold tracking-[-1px] sm:text-[3.375rem] md:text-[5.625rem] lg:leading-[5.18rem]">
               Basta brutte sorprese.
             </h1>
-            <p className="mb-10 max-w-2xl text-center text-xl font-medium leading-9 lg:text-left">
+            <p className="leading-1 mb-10 max-w-2xl text-left font-medium lg:text-xl lg:leading-9">
               Fatturex é la prima piattaforma che ti permette di gestire le tue fatture ed avere un calcolo preciso delle tasse da pagare.
             </p>
-            <div className="flex flex-col items-center justify-center gap-5 sm:flex-row lg:justify-normal">
+            <div className="flex flex-row items-center justify-center gap-2 lg:justify-normal lg:gap-5">
               <Button
                 variant="default"
                 asChild
-                className="h-fit w-full rounded-lg border-2 border-primary px-8 py-4 text-lg font-semibold sm:w-fit"
+                className="h-fit w-full rounded-lg border-2 border-primary px-8 py-4 font-semibold sm:w-fit lg:text-lg"
               >
                 <Link href={getAppUrl()}>Prova Gratis</Link>
               </Button>
               <Button
                 variant="ghost"
                 asChild
-                className="h-fit w-full rounded-lg border-2 px-8 py-4 text-lg font-semibold hover:border-primary hover:bg-transparent sm:w-fit"
+                className="h-fit w-full rounded-lg border-2 px-8 py-4 font-semibold hover:border-primary hover:bg-transparent sm:w-fit lg:text-lg"
               >
                 <Link href={getAppUrl()}>Inizia Ora</Link>
               </Button>
             </div>
-            <div className="mt-6 flex flex-wrap justify-center gap-7 lg:justify-normal">
+            <div className="mt-6 flex flex-wrap gap-2 lg:justify-normal lg:gap-7">
               {[
                 "Nessuna carta di credito richiesta",
                 "Disdici quando vuoi",
