@@ -14,7 +14,9 @@
     "STS_URL",
     "STS_CERTIFICATE",
     "APP_ENV",
-    "VERCEL_ENV"
+    "VERCEL_ENV",
+    "GOOGLE_CLIENT_SECRET",
+    "GOOGLE_CLIENT_ID"
   ],
   "tasks": {
     "build": {
