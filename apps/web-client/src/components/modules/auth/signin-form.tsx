@@ -51,7 +51,15 @@ export function SigninForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSave)}>
         <CardContent className="space-y-2">
-          <Button type="button" className="w-full" variant="outline" size="sm">
+          <Button
+            type="button"
+            className="w-full"
+            variant="outline"
+            size="sm"
+            onClick={() => authClient.signIn.social({
+              provider: "google",
+            })}
+          >
             <Image src="https://img.clerk.com/static/google.svg?width=160" alt="Accedi con Google" height={160} width={160} className="size-4" />
             Accedi con Google
           </Button>

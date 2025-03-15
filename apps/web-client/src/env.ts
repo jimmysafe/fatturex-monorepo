@@ -17,6 +17,8 @@ export const env = createEnv({
     BLOB_READ_WRITE_TOKEN: z.string().min(1),
     KV_REST_API_TOKEN: z.string().min(1),
     KV_REST_API_URL: z.string().min(1),
+    GOOGLE_CLIENT_ID: z.string().min(1),
+    GOOGLE_CLIENT_SECRET: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().min(1),
@@ -50,6 +52,8 @@ export const env = createEnv({
     NEXT_PUBLIC_BUCKET_URL: process.env.NEXT_PUBLIC_BUCKET_URL,
     KV_REST_API_TOKEN: process.env.KV_REST_API_TOKEN,
     KV_REST_API_URL: process.env.KV_REST_API_URL,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     NEXT_PUBLIC_STRIPE_PLAN_PRICE_ID_MONTHLY_FREE: process.env.NEXT_PUBLIC_STRIPE_PLAN_PRICE_ID_MONTHLY_FREE,
     NEXT_PUBLIC_STRIPE_PLAN_PRICE_ID_YEARLY_FREE: process.env.NEXT_PUBLIC_STRIPE_PLAN_PRICE_ID_YEARLY_FREE,
     NEXT_PUBLIC_STRIPE_PLAN_PRICE_ID_MONTHLY_BASE: process.env.NEXT_PUBLIC_STRIPE_PLAN_PRICE_ID_MONTHLY_BASE,
