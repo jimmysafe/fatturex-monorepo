@@ -2,20 +2,20 @@
 import type { ComponentProps, ElementType } from "react";
 
 import { authClient } from "@repo/auth/client";
-import { DropdownMenuItem } from "@repo/ui/components/ui/dropdown-menu";
+import { Button } from "@repo/ui/components/ui/button";
 import { useRouter } from "next/navigation";
 
 type LogoutButtonProps<T extends ElementType> = {
   as?: T;
 } & Omit<ComponentProps<T>, "as" | "onClick">;
 
-export function LogoutButton<T extends ElementType = typeof DropdownMenuItem>({
+export function LogoutButton<T extends ElementType = typeof Button>({
   as,
   children,
   ...props
 }: LogoutButtonProps<T>) {
   const router = useRouter();
-  const Component = as || DropdownMenuItem;
+  const Component = as || Button;
   const content = children || "Esci";
 
   return (

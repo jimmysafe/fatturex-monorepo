@@ -3,7 +3,9 @@ import { Suspense } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@repo/ui/components/ui/card";
 import { Skeleton } from "@repo/ui/components/ui/skeleton";
 import { TextRow } from "@repo/ui/components/ui/text-row";
+import { LogOut } from "lucide-react";
 
+import { LogoutButton } from "@/components/common/logout-button";
 import { session } from "@/lib/session";
 
 export function ProfiloCard() {
@@ -19,7 +21,13 @@ async function Content() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Profilo</CardTitle>
+        <CardTitle className="flex items-center justify-between gap-2">
+          Profilo
+          <LogoutButton variant="ghost" className="text-destructive">
+            <LogOut />
+            Esci
+          </LogoutButton>
+        </CardTitle>
         <CardDescription>Informazioni Generali</CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">

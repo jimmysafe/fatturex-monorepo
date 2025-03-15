@@ -55,7 +55,7 @@ const ColorPicker = forwardRef<
           <button
             type="button"
             {...props}
-            className={cn('w-[124px] aspect-square rounded-lg', className)}
+            className={cn('w-[124px] h-8 rounded-sm', className)}
             name={name}
             onClick={() => {
               setOpen(true);

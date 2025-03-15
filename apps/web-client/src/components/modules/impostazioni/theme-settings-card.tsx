@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@repo/ui/components/ui/card";
 import { Skeleton } from "@repo/ui/components/ui/skeleton";
 
 import { _getUserSubscription } from "@/lib/cached/get-subscription";
@@ -21,15 +20,9 @@ async function Content() {
   const { user } = await session();
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Impostazioni Fattura</CardTitle>
-        <CardDescription>Personalizza il tuo logo e il colore principale mostrato in fattura.</CardDescription>
-      </CardHeader>
-      <CardContent className="flex gap-4">
-        <LogoUpload subscription={subscription} user={user} />
-        <ThemeColorPicker subscription={subscription} user={user} />
-      </CardContent>
-    </Card>
+    <div className="space-y-8">
+      <LogoUpload subscription={subscription} user={user} />
+      <ThemeColorPicker subscription={subscription} user={user} />
+    </div>
   );
 }
