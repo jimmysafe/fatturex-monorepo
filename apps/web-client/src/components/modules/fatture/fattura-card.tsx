@@ -13,7 +13,7 @@ import type { ArrayElement } from "@/server/types";
 import { FatturaBadges } from "./fattura-badges";
 
 export function FatturaCard(fattura: ArrayElement<Awaited<ReturnType<typeof getFatture | typeof getFattureCliente>>["data"]>) {
-  const annoFattura = fattura.dataEmissione.getFullYear();
+  const annoFattura = new Date(fattura.dataEmissione).getFullYear();
 
   return (
     <Link href={`/${annoFattura}/fatture/${fattura.id}`} className="group">
