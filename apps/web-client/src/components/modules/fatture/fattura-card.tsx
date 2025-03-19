@@ -7,17 +7,16 @@ import { Card, CardTitle } from "@repo/ui/components/ui/card";
 import { format } from "date-fns";
 import { ChevronRight, FileText } from "lucide-react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 
 import type { ArrayElement } from "@/server/types";
 
 import { FatturaBadges } from "./fattura-badges";
 
 export function FatturaCard(fattura: ArrayElement<Awaited<ReturnType<typeof getFatture | typeof getFattureCliente>>["data"]>) {
-  const { anno } = useParams<{ anno: string }>();
+  const annoFattura = fattura.dataEmissione.getFullYear();
 
   return (
-    <Link href={`/${anno}/fatture/${fattura.id}`} className="group">
+    <Link href={`/${annoFattura}/fatture/${fattura.id}`} className="group">
       <Card className="grid grid-cols-2 gap-y-4 p-4 duration-200 group-hover:translate-x-1 md:grid-cols-4 md:gap-2 md:p-6">
         <div className="flex items-start gap-1 md:items-center md:gap-4">
           <FileText className="hidden size-9 text-gray-200 md:block" />
@@ -27,7 +26,7 @@ export function FatturaCard(fattura: ArrayElement<Awaited<ReturnType<typeof getF
               {" "}
               /
               {" "}
-              {anno}
+              {annoFattura}
             </CardTitle>
             <p className="text-xs font-medium text-muted-foreground">{format(fattura.dataEmissione, "dd/MM/yyyy")}</p>
           </div>

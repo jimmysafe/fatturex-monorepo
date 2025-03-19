@@ -207,7 +207,6 @@ function FormFieldDatePicker(
                 selected={field.value}
                 onSelect={field.onChange}
                 locale={it}
-                initialFocus
                 {...props.options}
               />
             </PopoverContent>
