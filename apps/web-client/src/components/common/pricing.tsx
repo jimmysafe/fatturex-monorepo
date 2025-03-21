@@ -109,7 +109,7 @@ export function Pricing() {
           <Card key={plan.label} className="flex w-full flex-col rounded-lg border p-6 text-left">
             <Badge className="mb-8 block w-fit">{ plan.label.toUpperCase()}</Badge>
             <span className="text-4xl font-medium">{ isAnnually ? price(plan.price.yearly.amount) : price(plan.price.monthly.amount)}</span>
-            <p className="text-sm text-muted-foreground">al mese</p>
+            <p className="text-sm text-muted-foreground">{isAnnually ? "all'anno" : "al mese"}</p>
             <Separator className="my-6" />
             <div className="flex flex-1 flex-col justify-between gap-20">
               <ul className="flex-1 space-y-2 text-muted-foreground">

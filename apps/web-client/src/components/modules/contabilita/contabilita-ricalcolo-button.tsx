@@ -7,7 +7,7 @@ import { useServerAction } from "zsa-react";
 
 import { ricalcoloContabilita } from "@/server/actions/contabilita";
 
-export function ContabilitaRicalcoloButton(props: { anno: number }) {
+export function ContabilitaRicalcoloButton() {
   const { execute, isPending } = useServerAction(ricalcoloContabilita, {
     onSuccess() {
       toast.success("Ricalcolo completato");
@@ -18,8 +18,8 @@ export function ContabilitaRicalcoloButton(props: { anno: number }) {
   });
 
   return (
-    <Button size="sm" variant="ghost" className="text-primary" onClick={() => execute({ anno: props.anno.toString() })} loading={isPending}>
-      <RotateCcw />
+    <Button size="sm" onClick={() => execute()} loading={isPending}>
+      {!isPending && <RotateCcw />}
       Ricalcola
     </Button>
   );

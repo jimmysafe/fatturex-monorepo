@@ -27,17 +27,19 @@ async function Content() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Lista Contabilitá</CardTitle>
+        <CardTitle className="flex items-center justify-between">
+          Lista Contabilitá
+          <ContabilitaRicalcoloButton />
+        </CardTitle>
         <CardDescription>Il resoconto generale delle contabilitá disponibili per anno.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">
         <div className="space-y-4">
           {contabilitaList?.data.map(contabilita => (
-            <Card key={contabilita.id} className="mx-auto max-w-4xl shadow-none">
+            <Card key={contabilita.id} className="shadow-none">
               <CardHeader>
-                <CardTitle className="flex items-center justify-between">
+                <CardTitle>
                   {contabilita.anno}
-                  <ContabilitaRicalcoloButton anno={contabilita.anno} />
                 </CardTitle>
               </CardHeader>
               <CardContent className="grid grid-cols-1 gap-4 pt-4 md:grid-cols-2 lg:grid-cols-4">

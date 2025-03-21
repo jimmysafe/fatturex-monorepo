@@ -1,9 +1,10 @@
 "use server";
 import { db } from "@repo/database/client";
 import { and, eq } from "@repo/database/lib/utils";
+import { getAnniContabilita } from "@repo/database/queries/contabilita";
 import { getFattureSaldate } from "@repo/database/queries/fatture";
 import { contabilita, CreateContabilitaSchema, UpdateContabilitaSchema } from "@repo/database/schema";
-import { IdParamSchema, YearParamSchema } from "@repo/shared/params-validators";
+import { IdParamSchema } from "@repo/shared/params-validators";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { ZSAError } from "zsa";
@@ -49,9 +50,20 @@ export const deleteContabilita = authProcedure
 
 export const ricalcoloContabilita = authProcedure
   .createServerAction()
-  .input(YearParamSchema)
-  .handler(async ({ input: { anno }, ctx: { user } }) => {
-    const fattureSaldate = await getFattureSaldate(anno, user.id);
-    const result = await ricalcoloCassa({ anno: Number(anno), userId: user.id, fattureSaldate });
-    return result;
+  .handler(async ({ ctx: { user } }) => {
+    try {
+      const a = await getAnniContabilita({ userId: user.id });
+      const anni = a.sort((a, b) => a.anno - b.anno).map(a => a.anno);
+
+      for (const anno of anni) {
+        const fattureSaldate = await getFattureSaldate(anno.toString(), user.id);
+        await ricalcoloCassa({ anno, userId: user.id, fattureSaldate });
+      }
+      revalidatePath("/", "layout");
+      return { success: true };
+    }
+    catch (error) {
+      console.error(error);
+      throw new ZSAError("INTERNAL_SERVER_ERROR", "Errore durante il ricalcolo delle contabilità");
+    }
   });

@@ -47,32 +47,28 @@ export async function ricalcoloCassa({
 
   const fatture_processate: Partial<Fattura>[] = [];
 
-  await Promise.all(
-    fattureSaldate.map(async (fattura) => {
-      const handler = new Handler({ ...user, cassa: user.cassa! });
-      const fattura_processata = await handler.fattura_handler({
-        fattura,
-        fatturePrecedenti: fatture_processate,
-        anniPartitaIva,
-        coefficienteRedditivita,
-        contabilitaAnnoPrecedente,
-        contabilita_anno_corrente: contabilitaAnnoCorrente,
-      });
+  for await (const fattura of fattureSaldate) {
+    const handler = new Handler({ ...user, cassa: user.cassa! });
+    const fattura_processata = await handler.fattura_handler({
+      fattura,
+      fatturePrecedenti: fatture_processate,
+      anniPartitaIva,
+      coefficienteRedditivita,
+      contabilitaAnnoPrecedente,
+      contabilita_anno_corrente: contabilitaAnnoCorrente,
+    });
 
-      fatture_processate.push(fattura_processata ?? {});
-      contabilitaHandler?.calcolaPerFattura(fattura_processata as any);
+    fatture_processate.push(fattura_processata ?? {});
+    contabilitaHandler?.calcolaPerFattura(fattura_processata as any);
 
-      return db.transaction(async (tx) => {
-        return Promise.all(
-          fatture_processate.map((processed) => {
-            if (!processed.id)
-              return Promise.resolve();
-            return tx.update(fatturaDb).set(processed).where(eq(fatturaDb.id, processed.id));
-          }),
-        );
-      });
-    }),
-  );
+    await db.transaction(async (tx) => {
+      for (const processed of fatture_processate) {
+        if (!processed.id)
+          continue;
+        await tx.update(fatturaDb).set(processed).where(eq(fatturaDb.id, processed.id)).returning();
+      }
+    });
+  }
 
   contabilitaHandler?.finalize();
 

@@ -20,6 +20,7 @@ export class HandlerFatturaGS {
 
   public process(): Partial<Fattura> {
     return {
+      id: this.fattura.id,
       ricavo: this.ricavo,
       ricavoTassabile: this.ricavoTassabile,
       ril: this.ril,
