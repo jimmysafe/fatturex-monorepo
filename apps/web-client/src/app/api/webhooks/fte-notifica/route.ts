@@ -16,6 +16,13 @@ async function updateFattura(fteId: string, stato: FteStatoType, error?: string)
   );
 }
 
+async function getFattura(fteId: string) {
+  const f = await db.query.fattura.findFirst({
+    where: eq(fattura.fteId, fteId),
+  });
+  return f;
+}
+
 export async function POST(request: Request) {
   const body = await request.json() as FteNotificationResponse;
 
@@ -35,6 +42,10 @@ export async function POST(request: Request) {
         : errori.Suggerimento ?? errori.Descrizione;
 
     if (notification.type === "NS") {
+      const existingFattura = await getFattura(notification.invoice_uuid);
+      if (existingFattura?.fteStato === FteStato.INVIATA)
+        return;
+
       await updateFattura(
         notification.invoice_uuid,
         FteStato.SCARTATA,
