@@ -1,6 +1,6 @@
 "use client";
 import { authClient } from "@repo/auth/client";
-import { ImpersonateDialog } from "@repo/auth/components/impersonate-dialog.js";
+import { ImpersonateDialog } from "@repo/auth/components/impersonate-dialog";
 import { ImpersonatingOverlay } from "@repo/auth/components/impersonate-overlay";
 import { Button } from "@repo/ui/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@repo/ui/components/ui/popover";
