@@ -6,6 +6,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./client": "./src/client.ts",
+    "./components/*": "./src/components/*.tsx",
     "./lib/*": "./src/lib/*.ts"
   },
   "scripts": {
@@ -15,8 +16,10 @@
     "@repo/database": "workspace:*",
     "@repo/ui": "workspace:*",
     "better-auth": "catalog:",
+    "lucide-react": "catalog:",
     "react": "catalog:react",
-    "react-dom": "catalog:react"
+    "react-dom": "catalog:react",
+    "zod": "catalog:"
   },
   "dependencies": {
     "@repo/shared": "workspace:*",
@@ -27,6 +30,8 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "catalog:",
+    "@types/react": "catalog:react",
+    "@types/react-dom": "catalog:react",
     "dotenv": "^16.4.5",
     "eslint": "catalog:",
     "typescript": "catalog:"

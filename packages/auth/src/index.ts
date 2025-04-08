@@ -1,11 +1,10 @@
 /* eslint-disable node/no-process-env */
-import { sendOtpSigninEmail } from "@repo/auth/lib/send-otp-email";
 import { db } from "@repo/database/client";
 import { getUserPublicDetails } from "@repo/database/queries/user";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
-import { customSession, emailOTP } from "better-auth/plugins";
+import { admin, customSession, emailOTP } from "better-auth/plugins";
 
 const url = process.env.NEXT_PUBLIC_APP_URL;
 const baseHost = url?.match(/^https?:\/\/(?:[^:/\s.]+\.)*([^:/\s.]+\.[^:/\s.]+)(:\d+)?/i)?.[1];
@@ -35,10 +34,13 @@ export const auth = betterAuth({
     provider: "sqlite",
   }),
   plugins: [
+    admin({
+      adminRoles: ["admin"],
+    }),
     emailOTP({
       async sendVerificationOTP({ email, otp, type }) {
-        if (type === "sign-in")
-          await sendOtpSigninEmail(email, otp);
+        // if (type === "sign-in")
+        //   await sendOtpSigninEmail(email, otp);
       },
     }),
     customSession(async ({ user, session }) => {
@@ -110,3 +112,6 @@ export const auth = betterAuth({
     },
   },
 });
+
+export type AuthSession = typeof auth.$Infer.Session.session;
+export type AuthUser = typeof auth.$Infer.Session.user;
