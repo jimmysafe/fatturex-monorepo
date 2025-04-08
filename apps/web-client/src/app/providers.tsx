@@ -1,6 +1,7 @@
 "use client";
 import { I18nextProvider } from "react-i18next";
 
+import { Impersonate } from "@repo/auth/components/impersonate";
 import { ThemeProvider } from "@repo/ui/providers/theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -45,6 +46,7 @@ export function AppProviders(props: { children: React.ReactNode }) {
         >
           {props.children}
         </ThemeProvider>
+        <Impersonate />
         <ReactQueryDevtools initialIsOpen={false} position="left" />
       </QueryClientProvider>
     </I18nextProvider>
