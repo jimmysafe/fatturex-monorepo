@@ -2,9 +2,7 @@ import { auth } from "@repo/auth";
 import { headers } from "next/headers";
 import { createServerActionProcedure } from "zsa";
 
-import { env } from "@/env";
-
-import { ratelimit } from "../redis/rate-limiter";
+// import { ratelimit } from "../redis/rate-limiter";
 
 export const authProcedure = createServerActionProcedure()
   .handler(async () => {
@@ -12,11 +10,11 @@ export const authProcedure = createServerActionProcedure()
     if (!session)
       throw new Error("User not authenticated");
 
-    if (env.APP_ENV === "production") {
-      const { success } = await ratelimit.limit(session.user.id);
-      if (!success)
-        throw new Error("Rate limit exceeded");
-    }
+    // if (env.APP_ENV === "production") {
+    //   const { success } = await ratelimit.limit(session.user.id);
+    //   if (!success)
+    //     throw new Error("Rate limit exceeded");
+    // }
 
     return session;
   });

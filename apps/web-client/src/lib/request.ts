@@ -4,10 +4,7 @@ import type { z, ZodObject } from "zod";
 import { auth } from "@repo/auth";
 import { headers } from "next/headers";
 
-import { env } from "@/env";
-import { ratelimit } from "@/server/redis/rate-limiter";
-
-import { badRequest, rateLimited, unauthorized } from "./response";
+import { badRequest, unauthorized } from "./response";
 
 export async function getJsonBody(request: Request) {
   try {
@@ -45,12 +42,12 @@ export async function parseRequest<S extends ZodObject<any>>(
     }
   }
 
-  if (user && env.APP_ENV === "production") {
-    const { success } = await ratelimit.limit(user.id);
-    if (!success) {
-      error = () => rateLimited();
-    }
-  }
+  // if (user && env.APP_ENV === "production") {
+  //   const { success } = await ratelimit.limit(user.id);
+  //   if (!success) {
+  //     error = () => rateLimited();
+  //   }
+  // }
 
   if (schema) {
     const isGet = request.method === "GET";
