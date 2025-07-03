@@ -66,8 +66,8 @@ export const fteActivate = fteActiveProcedure
         fiscal_id: piva.numero,
         name: piva.numero,
         email: user.email,
-        apply_signature: false,
-        apply_legal_storage: false,
+        apply_signature: true,
+        apply_legal_storage: true,
       }),
     });
 
