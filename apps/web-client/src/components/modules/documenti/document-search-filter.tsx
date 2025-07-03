@@ -190,8 +190,8 @@ export function DocumentSearchFilter({
       </div>
 
       {/* Filters and Sort Bar */}
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex flex-col gap-2 md:flex-row md:items-center">
           {/* Filter Toggle */}
           <Popover open={isFilterOpen} onOpenChange={setIsFilterOpen}>
             <PopoverTrigger asChild>

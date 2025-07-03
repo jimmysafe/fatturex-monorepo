@@ -168,9 +168,9 @@ function DocumentCard({
         </div>
 
         {/* Metadata */}
-        <div className="space-y-2 pt-4">
+        <div className="space-y-2 p-4 md:px-0 md:pb-0">
           <h3
-            className="line-clamp-2 text-sm font-medium"
+            className="line-clamp-1 truncate text-xs font-medium md:text-sm"
             title={document.displayName}
           >
             {document.displayName}
@@ -496,7 +496,7 @@ export function DocumentGridList({
       {/* Document Grid/List */}
       {viewMode === "grid" ? (
         <div
-          className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4"
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
           role="grid"
           aria-label="Documents grid"
         >

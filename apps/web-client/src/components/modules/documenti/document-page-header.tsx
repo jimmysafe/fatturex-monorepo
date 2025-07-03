@@ -35,7 +35,7 @@ export function DocumentPageHeader({
   onUploadComplete,
 }: DocumentPageHeaderProps) {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
       <div>
         <h1 className="text-2xl font-bold">
           Documenti
