@@ -1,6 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 
-import { LayoutDashboardIcon, NewspaperIcon, SquareUserRoundIcon } from "lucide-react";
+import { FileIcon, LayoutDashboardIcon, NewspaperIcon, SquareUserRoundIcon } from "lucide-react";
 
 export interface MenuItem {
   title: string;
@@ -23,5 +23,10 @@ export const items: MenuItem[] = [
     title: "Clienti",
     url: "/clienti",
     icon: SquareUserRoundIcon,
+  },
+  {
+    title: "Documenti",
+    url: "/documenti",
+    icon: FileIcon,
   },
 ];
