@@ -14,7 +14,7 @@ import { env } from "@/env";
 export function generateDocumentPath(userId: string, anno: string, filename: string): string {
   // Clean filename to ensure it's safe for storage
   const cleanFilename = filename.replace(/[^a-z0-9.-]/gi, "_");
-  return `documents/${userId}/${anno}/${cleanFilename}`;
+  return `fatturex/${userId}/documents/${anno}/${cleanFilename}`;
 }
 
 /**
@@ -72,7 +72,7 @@ export async function deleteDocument(url: string): Promise<void> {
  * @returns Promise with list of blobs
  */
 export async function listUserDocuments(userId: string, anno: string) {
-  const prefix = `documents/${userId}/${anno}/`;
+  const prefix = `fatturex/${userId}/documents/${anno}/`;
 
   const { blobs } = await list({
     prefix,

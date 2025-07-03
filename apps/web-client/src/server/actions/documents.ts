@@ -349,7 +349,7 @@ function detectDocumentCategory(mimeType: string): string {
  */
 function verifyDocumentOwnership(url: string, userId: string, anno: string): void {
   const pathname = new URL(url).pathname;
-  const expectedPrefix = `/documents/${userId}/${anno}/`;
+  const expectedPrefix = `/fatturex/${userId}/documents/${anno}/`;
 
   if (!pathname.startsWith(expectedPrefix)) {
     throw new ZSAError("FORBIDDEN", "You can only access your own documents");
