@@ -177,7 +177,7 @@ export const fteInvioFattura = fteActiveProcedure
       nomeUtente: `${user.nome} ${user.cognome}`,
     });
 
-    const res = await fetch(`${getOpenapiUrl().sdi}/invoices`, {
+    const res = await fetch(`${getOpenapiUrl().sdi}/invoices_signature_legal_storage`, {
       method: "POST",
       headers: {
         "Content-Type": "application/xml",
