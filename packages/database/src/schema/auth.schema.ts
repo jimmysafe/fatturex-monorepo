@@ -2,6 +2,7 @@ import type { UserCassaType, UserRolesType } from "@repo/database/lib/enums";
 
 import { UserCassa, UserCassaValues, UserRoles, UserRolesValues } from "@repo/database/lib/enums";
 import { textEnum } from "@repo/database/lib/utils";
+import { document } from "@repo/database/schemas/document.schema";
 import { partitaIva } from "@repo/database/schemas/partita-iva.schema";
 import { subscription } from "@repo/database/schemas/subscription.schema";
 import { PRIMARY_COLOR } from "@repo/shared/const";
@@ -33,9 +34,10 @@ export const user = sqliteTable("user", {
   updatedAt: integer("updated_at", { mode: "timestamp" }).notNull(),
 });
 
-export const usersRelations = relations(user, ({ one }) => ({
+export const usersRelations = relations(user, ({ one, many }) => ({
   partitaIva: one(partitaIva),
   subscription: one(subscription),
+  documents: many(document),
 }));
 
 export const UserSchema = createSelectSchema(user, {

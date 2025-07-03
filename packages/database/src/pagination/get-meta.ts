@@ -9,7 +9,8 @@ export async function getMeta(
   where: SQL | undefined,
   params: { page?: string; per_page?: string; sort?: string },
 ) {
-  const counts = await db.select({ count: count() }).from(table).where(where);
+  const query = db.select({ count: count() }).from(table);
+  const counts = where ? await query.where(where) : await query;
   const total = counts[0]?.count || 0;
 
   const page = Number(params.page || "1");

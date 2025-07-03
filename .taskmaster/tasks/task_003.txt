@@ -1,0 +1,77 @@
+# Task ID: 3
+# Title: Implement Authenticated Document Management Server Actions
+# Status: pending
+# Dependencies: 1, 2
+# Priority: medium
+# Description: Develop server actions for document management in `/server/actions/documents.ts`, ensuring all actions use the existing authProcedure pattern for authentication and authorization.
+# Details:
+Implement the following server actions using the established ZSA and authProcedure patterns:
+
+- `uploadDocuments`: Accept multiple file uploads, validate file size (using MAX_FILE_SIZE), file type, and year parameter. Store files in Vercel Blob under the /$userId/$anno structure, and save metadata to the database. Integrate with Vercel Blob via the '@vercel/blob' package and use the document metadata queries from the database layer. Ensure only authenticated users can upload and that files are associated with the correct user.
+- `getDocuments`: Retrieve a list of documents for the authenticated user and specified year. Enforce authorization so users can only access their own documents.
+- `getDocument`: Fetch metadata for a single document, ensuring the user owns the document. Generate a secure, time-limited download URL using Vercel Blob.
+- `deleteDocuments`: Allow users to delete multiple documents. Remove files from both Vercel Blob and the database, ensuring atomicity and proper authorization.
+- `updateDocument`: Enable users to update document metadata (e.g., rename, description), with validation and authorization checks.
+- `downloadDocument`: Generate a secure download URL for a single document, ensuring only the owner can access it.
+- `downloadMultipleDocuments`: Bundle selected documents into a ZIP file and provide a secure download link, handling large files efficiently.
+
+All actions must:
+- Use the authProcedure to enforce authentication and authorization.
+- Validate file size, type, and year parameters according to project standards.
+- Use ZSA error handling patterns for consistent error reporting and user feedback.
+- Integrate with the Vercel Blob storage and the document metadata database queries implemented in previous tasks.
+- Follow existing server action and error handling conventions in the codebase.
+
+# Test Strategy:
+1. Write unit and integration tests for each server action, verifying correct authentication, authorization, and error handling.
+2. Test file uploads with valid and invalid files (size, type, year) and confirm correct storage in Vercel Blob and metadata in the database.
+3. Retrieve document lists and single document metadata, ensuring only the owner's documents are accessible.
+4. Attempt unauthorized access and confirm proper error responses.
+5. Delete documents and verify removal from both storage and database.
+6. Update document metadata and confirm changes persist.
+7. Generate and test secure download URLs for single and multiple documents, ensuring only authorized users can access them.
+8. Validate error handling for all edge cases (invalid input, storage/database failures, unauthorized access).
+
+# Subtasks:
+## 1. Set Up Authenticated Server Action Boilerplate [pending]
+### Dependencies: None
+### Description: Establish the foundational structure for server actions in `/server/actions/documents.ts`, ensuring all actions use the existing `authProcedure` and ZSA error handling patterns.
+### Details:
+Create a base template for server actions that enforces authentication and authorization using `authProcedure`, and integrates ZSA error handling for consistent error reporting.
+
+## 2. Implement Document Upload Functionality [pending]
+### Dependencies: 3.1
+### Description: Develop the `uploadDocuments` action to handle multiple file uploads, validate file size/type/year, store files in Vercel Blob, and save metadata to the database.
+### Details:
+Integrate with the '@vercel/blob' package to store files under the /$userId/$anno structure. Validate each file against MAX_FILE_SIZE and allowed types, and ensure the year parameter is correct. Save document metadata using the existing database queries.
+
+## 3. Implement Document Retrieval Actions [pending]
+### Dependencies: 3.1
+### Description: Develop `getDocuments` and `getDocument` actions to retrieve lists and single document metadata for the authenticated user, enforcing ownership and authorization.
+### Details:
+Ensure users can only access their own documents. For `getDocument`, generate a secure, time-limited download URL using Vercel Blob.
+
+## 4. Implement Document Deletion with Atomicity [pending]
+### Dependencies: 3.1, 3.2, 3.3
+### Description: Develop the `deleteDocuments` action to allow users to delete multiple documents, ensuring files are removed from both Vercel Blob and the database atomically.
+### Details:
+Ensure proper authorization, and use transaction-like logic to guarantee that deletions are all-or-nothing across storage and database.
+
+## 5. Implement Document Metadata Update [pending]
+### Dependencies: 3.1, 3.3
+### Description: Develop the `updateDocument` action to allow users to update document metadata (e.g., rename, description) with validation and authorization.
+### Details:
+Validate input fields, enforce ownership, and update metadata in the database using existing queries.
+
+## 6. Implement Secure Document Download Actions [pending]
+### Dependencies: 3.1, 3.3
+### Description: Develop `downloadDocument` and `downloadMultipleDocuments` actions to generate secure download URLs for single and multiple documents (bundled as ZIP), ensuring only owners can access.
+### Details:
+For single downloads, generate a time-limited URL via Vercel Blob. For multiple, bundle files into a ZIP and provide a secure download link, handling large files efficiently.
+
+## 7. Integrate Validation and Error Handling Across All Actions [pending]
+### Dependencies: 3.2, 3.3, 3.4, 3.5, 3.6
+### Description: Ensure all actions consistently validate file size, type, year, and enforce authentication/authorization using the established patterns. Apply ZSA error handling for user feedback.
+### Details:
+Review and refactor all actions to guarantee uniform validation, error reporting, and adherence to project standards.
+
