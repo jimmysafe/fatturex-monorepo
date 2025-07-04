@@ -1,10 +1,11 @@
 import type { UserCassaType } from "@repo/database/lib/enums";
-import type { Fattura } from "@repo/database/schema";
 
 import { UserCassa } from "@repo/database/lib/enums";
 
+import type { FatturaGeneratedArgs } from "@/pdf/generate";
+
 // Fix importo unitarion in base all'addebito del contributo (puramente estetico)
-export function getUnitPrice(a: { descrizione: string; prezzo: number; quantita: number }, fattura: Fattura, cassa: UserCassaType) {
+export function getUnitPrice(a: { descrizione: string; prezzo: number; quantita: number }, fattura: FatturaGeneratedArgs, cassa: UserCassaType) {
   if (!fattura.contributo)
     return a.prezzo;
   switch (cassa) {

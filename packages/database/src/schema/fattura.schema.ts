@@ -16,6 +16,7 @@ import { decimal, textEnum } from "@repo/database/lib/utils";
 import { user } from "@repo/database/schemas/auth.schema";
 import { cliente } from "@repo/database/schemas/cliente.schema";
 import { indirizzo } from "@repo/database/schemas/indirizzo.schema";
+import { CreateNotaDiCreditoSchema, notaDiCredito, NotaDiCreditoSchema, UpdateNotaDiCreditoSchema } from "@repo/database/schemas/nota-credito.schema";
 import { relations, sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
@@ -32,10 +33,12 @@ export const fattura = sqliteTable("fatture", {
   indirizzoId: text("indirizzo_id").notNull().references(() => indirizzo.id),
 
   numeroProgressivo: integer("numero_progressivo").notNull(),
+  // TODO: rimuovere questo campo dopo implementazione nota di credito
   numeroProgressivoNotaCredito: integer("numero_progressivo_nota_credito"),
 
   dataEmissione: integer("data_emissione", { mode: "timestamp" }).notNull(),
   dataSaldo: integer("data_saldo", { mode: "timestamp" }),
+  // TODO: rimuovere questo campo dopo implementazione nota di credito
   dataNotaCredito: integer("data_nota_credito", { mode: "timestamp" }),
 
   dataInvioEmail: integer("data_invio_email", { mode: "timestamp" }),
@@ -107,6 +110,7 @@ export const fatturaArticoloRelations = relations(fatturaArticolo, ({ one }) => 
 
 export const fatturaRelations = relations(fattura, ({ many, one }) => ({
   articoli: many(fatturaArticolo),
+  noteDiCredito: many(notaDiCredito),
   user: one(user, {
     fields: [fattura.userId],
     references: [user.id],
@@ -135,7 +139,7 @@ export const FatturaSchema = createSelectSchema(fattura, {
   stato: z.nativeEnum(FatturaStato),
   stsStato: z.nativeEnum(StsStato),
   fteStato: z.nativeEnum(FteStato),
-}).extend({ articoli: z.array(FatturaArticoloSchema) });
+}).extend({ articoli: z.array(FatturaArticoloSchema), noteDiCredito: z.array(NotaDiCreditoSchema).optional() });
 
 export const CreateFatturaSchema = createInsertSchema(fattura, {
   numeroProgressivo: z.coerce.number(),
@@ -146,9 +150,9 @@ export const CreateFatturaSchema = createInsertSchema(fattura, {
   preferenzaDataSaldo: z.nativeEnum(FatturaPreferenzaDataSaldo).optional(),
   stato: z.nativeEnum(FatturaStato),
   stsStato: z.nativeEnum(StsStato).optional(),
-}).omit({ id: true, userId: true, createdAt: true, updatedAt: true }).extend({ articoli: z.array(CreateFatturaArticoloSchema).default([]) });
+}).omit({ id: true, userId: true, createdAt: true, updatedAt: true }).extend({ articoli: z.array(CreateFatturaArticoloSchema).default([]), noteDiCredito: z.array(CreateNotaDiCreditoSchema).default([]) });
 
-export const UpdateFatturaSchema = CreateFatturaSchema.partial().extend({ articoli: z.array(UpdateFatturaArticoloSchema).default([]) });
+export const UpdateFatturaSchema = CreateFatturaSchema.partial().extend({ articoli: z.array(UpdateFatturaArticoloSchema).default([]), noteDiCredito: z.array(UpdateNotaDiCreditoSchema).default([]) });
 
 export const FatturaFilterSchema = z.object({
   stato: z.nativeEnum(FatturaStato).optional(),

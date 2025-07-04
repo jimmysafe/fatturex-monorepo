@@ -46,6 +46,7 @@
     "soap": "^1.1.8",
     "sonner": "catalog:",
     "stripe": "^17.6.0",
+    "uuid": "^11.0.5",
     "xml-js": "^1.6.11",
     "zod": "catalog:",
     "zod-i18n-map": "^2.27.0",

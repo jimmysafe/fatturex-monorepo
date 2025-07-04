@@ -7,7 +7,7 @@ import { FatturaStato } from "@repo/database/lib/enums";
 import { withinYear } from "@repo/database/lib/utils";
 import { filtered } from "@repo/database/pagination/filtered";
 import { getMeta } from "@repo/database/pagination/get-meta";
-import { fattura, fatturaArticolo, FatturaFilterSchema } from "@repo/database/schema";
+import { fattura, fatturaArticolo, FatturaFilterSchema, notaDiCredito } from "@repo/database/schema";
 import { and, asc, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 
@@ -102,9 +102,21 @@ export async function getFatturaProssimoProgressivo({ anno, userId }: { anno: st
     columns: {
       numeroProgressivo: true,
     },
+    with: {
+      noteDiCredito: {
+        orderBy: [desc(notaDiCredito.numeroProgressivo)],
+        columns: {
+          numeroProgressivo: true,
+        },
+      },
+    },
     orderBy: [desc(fattura.numeroProgressivo)],
     where: and(withinYear(fattura.dataEmissione, anno), eq(fattura.userId, userId)),
   });
+
+  if (data?.noteDiCredito && data.noteDiCredito.length > 0) {
+    return { numeroProgressivo: data.noteDiCredito[0]!.numeroProgressivo + 1 };
+  }
 
   return data ? { numeroProgressivo: data.numeroProgressivo + 1 } : { numeroProgressivo: 1 };
 }

@@ -5,6 +5,7 @@ export * from "@repo/database/schemas/contabilita.schema";
 export * from "@repo/database/schemas/document.schema";
 export * from "@repo/database/schemas/fattura.schema";
 export * from "@repo/database/schemas/indirizzo.schema";
+export * from "@repo/database/schemas/nota-credito.schema";
 export * from "@repo/database/schemas/partita-iva.schema";
 export * from "@repo/database/schemas/subscription.schema";
 export * from "@repo/database/schemas/tassa-maternita.schema";

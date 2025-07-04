@@ -1,4 +1,6 @@
+import { FatturaStato } from "@repo/database/lib/enums";
 import { getFattura } from "@repo/database/queries/fatture";
+import { getFatturaNoteDiCredito } from "@repo/database/queries/nota-credito";
 import { format } from "date-fns";
 import { notFound } from "next/navigation";
 
@@ -8,6 +10,7 @@ import { FatturaConfetti } from "@/components/modules/fatture/fattura-confetti";
 import { FatturaFteErrorAlert } from "@/components/modules/fatture/fattura-fte-error-alert";
 import { FatturaIbanAlert } from "@/components/modules/fatture/fattura-iban-alert";
 import { FatturaNextSteps } from "@/components/modules/fatture/fattura-next-steps";
+import { FatturaNoteDiCredito } from "@/components/modules/fatture/fattura-note-di-credito";
 import { PdfPreview } from "@/components/modules/fatture/pdf-preview";
 import { _getPartitaIva } from "@/lib/cached/get-partita-iva";
 import { _getUserSubscription } from "@/lib/cached/get-subscription";
@@ -24,6 +27,7 @@ export default async function FatturaPage({
   const { id } = await params;
   const { user } = await session();
   const fattura = await getFattura(id, user.id);
+  const noteDiCredito = await getFatturaNoteDiCredito(id, user.id);
   const partitaIva = await _getPartitaIva();
 
   if (!fattura)
@@ -52,7 +56,9 @@ export default async function FatturaPage({
       </div>
       <FatturaFteErrorAlert {...fattura} />
       <FatturaIbanAlert {...fattura} />
-      <FatturaNextSteps fattura={fattura} subscriptionPromise={subscriptionPromise} />
+      {fattura.stato !== FatturaStato.ANNULLATA
+        && <FatturaNextSteps fattura={fattura} subscriptionPromise={subscriptionPromise} />}
+      {noteDiCredito.length > 0 && <FatturaNoteDiCredito noteDiCredito={noteDiCredito} partitaIva={partitaIva} user={user} />}
       <div className="overflow-hidden rounded-md shadow-fade">
         <PdfPreview fattura={fattura} partitaIva={partitaIva} user={user} />
       </div>

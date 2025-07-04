@@ -1,11 +1,12 @@
 "use server";
 
 import { db } from "@repo/database/client";
-import { FteStato } from "@repo/database/lib/enums";
+import { FatturaStato, FteStato } from "@repo/database/lib/enums";
 import { and, eq } from "@repo/database/lib/utils";
-import { fattura, partitaIva } from "@repo/database/schema";
+import { fattura, notaDiCredito, partitaIva } from "@repo/database/schema";
 import { IdParamSchema } from "@repo/shared/params-validators";
 import { revalidatePath } from "next/cache";
+import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 import { ZSAError } from "zsa";
 
@@ -201,6 +202,110 @@ export const fteInvioFattura = fteActiveProcedure
     );
 
     revalidatePath(`/[anno]/fatture/${id}`, "page");
+
+    return result;
+  });
+
+export const fteInvioNotaDiCredito = fteActiveProcedure
+  .createServerAction()
+  .input(z.object({ mode: z.enum(["totale", "parziale"]), ...IdParamSchema.shape }))
+  .handler(async ({ input: { id, mode }, ctx: { user } }) => {
+    const piva = await db.query.partitaIva.findFirst({
+      where: eq(partitaIva.userId, user.id),
+    });
+    if (!piva)
+      throw new ZSAError("NOT_FOUND", "Partita IVA non trovata.");
+    if (!piva?.fteConfigurationId)
+      throw new ZSAError("UNPROCESSABLE_CONTENT", "Devi attivare il servizio Fattura Elettronica per inviare la fattura.");
+
+    const nota = await db.query.notaDiCredito.findFirst({
+      where: and(eq(notaDiCredito.id, id), eq(notaDiCredito.userId, user.id)),
+      with: {
+        fattura: {
+          with: {
+            cliente: true,
+            indirizzo: true,
+            articoli: true,
+          },
+        },
+      },
+    });
+
+    if (!nota)
+      throw new ZSAError("NOT_FOUND", "Nota di credito non trovata.");
+
+    let xml: string | null = null;
+
+    if (mode === "totale") {
+      xml = buildXml({
+        tipoDocumento: "TD04",
+        fattura: {
+          ...nota.fattura,
+          dataEmissione: nota.dataNotaCredito ?? new Date(),
+          numeroProgressivo: nota.numeroProgressivo,
+        },
+        cliente: nota.fattura.cliente,
+        partitaIva: piva,
+        nomeUtente: `${user.nome} ${user.cognome}`,
+      });
+    }
+    else {
+      xml = buildXml({
+        tipoDocumento: "TD04",
+        fattura: {
+          ...nota.fattura,
+          dataEmissione: nota.dataNotaCredito ?? new Date(),
+          numeroProgressivo: nota.numeroProgressivo,
+          articoli: [
+            {
+              prezzo: nota.totale,
+              quantita: 1,
+              descrizione: "Storno per errata fatturazione",
+              fatturaId: nota.fatturaId,
+              id: uuidv4(),
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+          ],
+          totaleFattura: nota.fattura.totaleFattura - nota.totale,
+        },
+        cliente: nota.fattura.cliente,
+        partitaIva: piva,
+        nomeUtente: `${user.nome} ${user.cognome}`,
+      });
+    }
+
+    const res = await fetch(`${getOpenapiUrl().sdi}/invoices_signature_legal_storage`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/xml",
+        "Authorization": `Bearer ${env.OPENAPI_API_KEY}`,
+        "Accept": "application/json",
+      },
+      body: xml.replace(/\s+/g, " ").trim(),
+    });
+
+    const result = await res.json() as z.infer<typeof FteResponseSchema>;
+
+    if (!res.ok || result.error)
+      throw new ZSAError("UNPROCESSABLE_CONTENT", result?.message || "Errore durante l'invio della fattura.");
+
+    await db.update(notaDiCredito).set({
+      fteStato: FteStato.PROCESSING,
+      fteId: result.data?.uuid,
+      fteError: null,
+    }).where(
+      and(eq(notaDiCredito.id, id), eq(notaDiCredito.userId, user.id)),
+    );
+
+    if (mode === "totale") {
+      await db.update(fattura).set({
+        stato: FatturaStato.ANNULLATA,
+        dataSaldo: null,
+      }).where(eq(fattura.id, nota.fattura.id));
+    }
+
+    revalidatePath(`/[anno]/fatture/${nota.fattura.id}`, "page");
 
     return result;
   });

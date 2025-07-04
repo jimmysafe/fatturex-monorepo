@@ -1,5 +1,5 @@
-import type { UserCassaType } from "@repo/database/lib/enums";
-import type { Cliente, Fattura, Indirizzo, PartitaIva } from "@repo/database/schema";
+import type { FatturaMetodoPagamentoType, FatturaPreferenzaDataSaldoType, UserCassaType } from "@repo/database/lib/enums";
+import type { Cliente, FatturaArticolo, Indirizzo, PartitaIva } from "@repo/database/schema";
 import type { TextOptionsLight } from "jspdf";
 import type { autoTable, Table } from "jspdf-autotable";
 
@@ -33,11 +33,30 @@ async function getImageAsBase64(imageUrl: string): Promise<string> {
   return `data:image/${imageUrl.split(".").pop()};base64,${buffer.toString("base64")}`;
 }
 
+export interface FatturaGeneratedArgs {
+  indirizzo: Indirizzo;
+  cliente: Cliente;
+  numeroProgressivo: number;
+  dataEmissione: Date;
+  preferenzaDataSaldo: FatturaPreferenzaDataSaldoType;
+  metodoPagamento: FatturaMetodoPagamentoType;
+  idMarcaDaBollo: string | null;
+  addebitaMarcaDaBollo: boolean | null;
+  contributo: number | null;
+  parzialeFattura: number;
+  totaleFattura: number;
+  articoli: FatturaArticolo[];
+  lingua: string;
+  addebitaContributo: boolean | null;
+}
+
 export async function generatePdf(
-  fattura: Fattura & { indirizzo: Indirizzo; cliente: Cliente },
+  fattura: FatturaGeneratedArgs & { indirizzo: Indirizzo; cliente: Cliente },
   partitaIva: PartitaIva,
   user: { email: string; cassa: UserCassaType; nome: string; cognome: string; logoPath?: string | null; themeColor?: string | null },
+  tipoFattura: "TD01" | "TD04" = "TD01",
 ) {
+  const isFattura = tipoFattura === "TD01";
   const margin = 20;
 
   const r = 210 - margin;
@@ -121,7 +140,7 @@ export async function generatePdf(
     doc.addImage(image, ext?.toUpperCase(), l, y, 20, 20);
   }
   else {
-    text(`${locale.fattura}`, l, y, colWidth, { size: 20 });
+    text(`${isFattura ? locale.fattura : locale.nota_di_credito}`, l, y, colWidth, { size: 20 });
   }
 
   const nome = text(`${user.nome} ${user.cognome}`, r, y, colWidth, { align: "right" });
@@ -136,9 +155,15 @@ export async function generatePdf(
 
   y += infoBlock.height + spaceYLarge;
 
+  const numeroText = isFattura
+    ? `**${locale.numero_fattura}:** ${fattura.numeroProgressivo}/${new Date(fattura.dataEmissione).getFullYear()}`
+    : `**${locale.nota_di_credito}:** ${fattura.numeroProgressivo}/${new Date(fattura.dataEmissione).getFullYear()}-NC`;
+
+  const dataText = isFattura ? locale.data_emissione : locale.data_nota_di_credito;
+
   block([
-    { text: `**${locale.numero_fattura}:** ${fattura.numeroProgressivo}/${new Date(fattura.dataEmissione).getFullYear()}` },
-    { text: `**${locale.data_emissione}:** ${format(fattura.dataEmissione, "dd/MM/yyyy")}` },
+    { text: numeroText },
+    { text: `**${dataText}:** ${format(fattura.dataEmissione, "dd/MM/yyyy")}` },
     fattura.preferenzaDataSaldo !== FatturaPreferenzaDataSaldo.IMMEDIATO ? { text: `${locale.preferenza_data_saldo} ${fattura.preferenzaDataSaldo} ${locale.giorni}` } : null,
   ], r, y, colWidth, { align: "right" });
 
@@ -181,23 +206,29 @@ export async function generatePdf(
   y = (previousTable.finalY || 0) + spaceYMedium;
 
   const legal1 = doc.splitTextToSize(`${locale.legal_note_1}`, docWidth);
-  doc.text(legal1, l, y);
-  y += lineHeight * legal1.length + spaceYSmall;
+  if (isFattura) {
+    doc.text(legal1, l, y);
+    y += lineHeight * legal1.length + spaceYSmall;
+  }
 
-  const legal2 = doc.splitTextToSize(`${locale.legal_note_2}`, docWidth);
-  doc.text(legal2, l, y);
-  y += lineHeight * legal2.length + spaceYLarge;
+  if (isFattura) {
+    const legal2 = doc.splitTextToSize(`${locale.legal_note_2}`, docWidth);
+    doc.text(legal2, l, y);
+    y += lineHeight * legal2.length + spaceYLarge;
+  }
 
   const hasMarcaDaBollo = fattura.parzialeFattura + (fattura.contributo ?? 0) > 77.46;
   const hasAddebitaMarcaDaBollo = hasMarcaDaBollo && fattura.addebitaMarcaDaBollo;
 
-  block([
-    fattura.metodoPagamento === FatturaMetodoPagamento.BONIFICO ? { text: `**IBAN**: ${partitaIva.iban || "-"}` } : null,
-    fattura.metodoPagamento === FatturaMetodoPagamento.BONIFICO ? { text: `**${locale.intestatario_iban}**: ${partitaIva.ibanIntestatario || "-"}` } : null,
-    fattura.metodoPagamento === FatturaMetodoPagamento.BONIFICO ? { text: `**${locale.banca}**: ${partitaIva.ibanBanca || "-"}` } : null,
-    fattura.metodoPagamento === FatturaMetodoPagamento.CARTA ? { text: `**${locale.metodo_pagamento_carta}**` } : null,
-    hasMarcaDaBollo ? { text: `**${locale.id_marca_da_bollo}:** ${fattura.idMarcaDaBollo ?? "-"}` } : null,
-  ], l, y, colWidth);
+  if (isFattura) {
+    block([
+      fattura.metodoPagamento === FatturaMetodoPagamento.BONIFICO ? { text: `**IBAN**: ${partitaIva.iban || "-"}` } : null,
+      fattura.metodoPagamento === FatturaMetodoPagamento.BONIFICO ? { text: `**${locale.intestatario_iban}**: ${partitaIva.ibanIntestatario || "-"}` } : null,
+      fattura.metodoPagamento === FatturaMetodoPagamento.BONIFICO ? { text: `**${locale.banca}**: ${partitaIva.ibanBanca || "-"}` } : null,
+      fattura.metodoPagamento === FatturaMetodoPagamento.CARTA ? { text: `**${locale.metodo_pagamento_carta}**` } : null,
+      hasMarcaDaBollo ? { text: `**${locale.id_marca_da_bollo}:** ${fattura.idMarcaDaBollo ?? "-"}` } : null,
+    ], l, y, colWidth);
+  }
 
   const totali = [
     { text: `**${locale.imponibile}:** ${price(fattura.parzialeFattura)}` },
