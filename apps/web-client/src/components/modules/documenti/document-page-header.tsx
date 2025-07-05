@@ -39,6 +39,7 @@ export function DocumentPageHeader({
       <div>
         <h1 className="text-2xl font-bold">
           Documenti
+          {" "}
           {anno}
         </h1>
         <p className="text-muted-foreground">

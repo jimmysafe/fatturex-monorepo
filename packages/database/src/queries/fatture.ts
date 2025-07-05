@@ -43,6 +43,7 @@ export async function getFatture({ userId, ...input }: GetFattureArgs & { userId
       articoli: true,
       cliente: true,
       indirizzo: true,
+      noteDiCredito: true,
     },
     limit: meta.data.perPage,
     offset: meta.skip,
@@ -61,6 +62,7 @@ export async function getFattura(id: string, userId: string) {
       indirizzo: true,
       cliente: true,
       user: true,
+      noteDiCredito: true,
     },
     where,
   });
@@ -91,6 +93,7 @@ export async function getFattureCliente({ userId, ...input }: GetFattureClienteA
     orderBy: desc(fattura.numeroProgressivo),
     with: {
       cliente: true,
+      noteDiCredito: true,
     },
   });
 
