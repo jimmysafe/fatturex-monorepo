@@ -1,0 +1,1 @@
+ALTER TABLE `nota_di_credito` ADD `mode` text NOT NULL;

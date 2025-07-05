@@ -1,9 +1,11 @@
 import type { UserCassaType } from "@repo/database/lib/enums";
-import type { Fattura } from "@repo/database/schema";
+import type { Fattura, FatturaArticolo } from "@repo/database/schema";
 
 import { db } from "@repo/database/client";
+import { calcolaTotaliFattura } from "@repo/database/lib/math";
 import { and, eq, withinYear } from "@repo/database/lib/utils";
 import { contabilita as contabilitaDb, fattura as fatturaDb, partitaIva as partitaIvaDb, tassaMaternita as tassaMaternitaDb, user as userDb } from "@repo/database/schema";
+import { v4 as uuidv4 } from "uuid";
 
 import { Handler } from "@/server/casse";
 
@@ -79,9 +81,37 @@ export async function ricalcoloFattura(
   fattura: Fattura,
   anno: number,
 ): Promise<Fattura> {
-  const fattureSaldate = await db.query.fattura.findMany({ with: { articoli: true }, where: and(withinYear(fatturaDb.dataSaldo, anno), eq(fatturaDb.userId, fattura.userId)) });
+  const fattureSaldate = await db.query.fattura.findMany({ with: { articoli: true, noteDiCredito: true, user: true }, where: and(withinYear(fatturaDb.dataSaldo, anno), eq(fatturaDb.userId, fattura.userId)) });
 
-  await ricalcoloCassa({ userId: fattura.userId, anno, fattureSaldate });
+  const fattureSaldateWithNoteDiCredito = fattureSaldate.map((f) => {
+    // check if has note di crtedito
+    if (!f.noteDiCredito || f.noteDiCredito.length === 0 || f.noteDiCredito.some(n => n.mode === "totale"))
+      return f;
+    // inserisci nota di credito come item fattura
+    const newArticoli: FatturaArticolo[] = [...f.articoli];
+    f.noteDiCredito.forEach((n) => {
+      newArticoli.push({
+        id: uuidv4(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        descrizione: "Storno per errata fatturazione",
+        quantita: 1,
+        prezzo: -n.totale,
+        fatturaId: f.id,
+      });
+    });
+
+    // calcola i totali fattura
+    const totali = calcolaTotaliFattura(newArticoli, f, f.user.cassa!);
+    // passa i totali fattura alla fattura stessa
+
+    return {
+      ...f,
+      ...totali,
+    };
+  });
+
+  await ricalcoloCassa({ userId: fattura.userId, anno, fattureSaldate: fattureSaldateWithNoteDiCredito });
 
   // Notifica Ricalcolo anno successivo se fattura saldata in anno precedente
   if (anno !== new Date().getFullYear()) {

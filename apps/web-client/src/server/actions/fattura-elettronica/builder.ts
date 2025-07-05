@@ -42,15 +42,13 @@ function formatData({
   nomeUtente,
   tipoDocumento,
 }: BaseParams): FatturaElettronica {
-  const progressivo
-        = tipoDocumento === "TD01" ? fattura.numeroProgressivo : fattura.numeroProgressivoNotaCredito;
+  const progressivo = fattura.numeroProgressivo;
 
-  const dataFattura
-        = tipoDocumento === "TD01" ? (fattura.dataEmissione || fattura.dataSaldo) : fattura.dataNotaCredito ?? new Date();
+  const dataFattura = fattura.dataEmissione || fattura.dataSaldo;
 
   const numeroFattura = `${randomstring.generate(
     5,
-  )}-${progressivo}/${new Date(dataFattura).getFullYear()}`;
+  )}-${progressivo}/${new Date(dataFattura).getFullYear()}${tipoDocumento === "TD04" ? "-NC" : ""}`;
 
   const causale = fattura.articoli?.map(i => i.descrizione).join(" / ");
 

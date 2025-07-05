@@ -2,6 +2,7 @@
 import { db } from "@repo/database/client";
 import { FatturaStato, FteStato } from "@repo/database/lib/enums";
 import { and, eq, withinYear } from "@repo/database/lib/utils";
+import { getFatturaProssimoProgressivo } from "@repo/database/queries/fatture";
 import {
   subscription as _subscription,
   CreateFatturaArticoloSchema,
@@ -9,6 +10,7 @@ import {
   fattura,
   fatturaArticolo,
   FattureExportSchema,
+  notaDiCredito,
   partitaIva,
   template,
   templateArticolo,
@@ -22,6 +24,7 @@ import { z } from "zod";
 import { ZSAError } from "zsa";
 
 import { generatePdf } from "@/pdf/generate";
+import { fteInvioNotaDiCredito } from "@/server/actions/fattura-elettronica";
 
 import { ricalcoloFattura } from "../casse/ricalcolo";
 import { authProcedure } from "../procedures/authenticated";
@@ -126,6 +129,60 @@ export const cambiaStatoFattura = authProcedure
     }
     catch (err) {
       console.error(err);
+    }
+  });
+
+export const annullaFattura = authProcedure
+  .createServerAction()
+  .input(z.object({ id: z.string().uuid().min(1), mode: z.enum(["totale", "parziale"]), amount: z.string().optional() }))
+  .handler(async ({ input: { id, mode, amount }, ctx: { user } }) => {
+    if (mode === "parziale" && !amount) {
+      throw new ZSAError("UNPROCESSABLE_CONTENT", "Importo obbligatorio per l'annullamento parziale");
+    }
+    const f = await db.query.fattura.findFirst({ where: and(eq(fattura.id, id), eq(fattura.userId, user.id)), with: { articoli: true } });
+    if (!f)
+      throw new ZSAError("NOT_FOUND", "Fattura non trovata");
+    if (f.fteStato !== FteStato.INVIATA) {
+      throw new ZSAError("UNPROCESSABLE_CONTENT", "Puoi annullare solo fatture inviate");
+    }
+
+    const { numeroProgressivo } = await getFatturaProssimoProgressivo({ anno: f.dataEmissione.getFullYear().toString(), userId: user.id });
+
+    if (mode === "totale") {
+      const [inserted] = await db.insert(notaDiCredito).values({
+        mode,
+        fatturaId: id,
+        totale: f.totaleFattura,
+        userId: user.id,
+        numeroProgressivo,
+        dataNotaCredito: new Date(),
+        lingua: f.lingua,
+      }).returning();
+      if (!inserted) {
+        throw new ZSAError("INTERNAL_SERVER_ERROR", "Errore durante la creazione della nota di credito");
+      }
+
+      await fteInvioNotaDiCredito({ mode, id: inserted.id });
+      await ricalcoloFattura(f, f.dataEmissione.getFullYear());
+      return inserted;
+    }
+    else if (mode === "parziale") {
+      const [inserted] = await db.insert(notaDiCredito).values({
+        mode,
+        fatturaId: id,
+        totale: Number(amount),
+        userId: user.id,
+        numeroProgressivo,
+        dataNotaCredito: new Date(),
+        lingua: f.lingua,
+      }).returning();
+      if (!inserted) {
+        throw new ZSAError("INTERNAL_SERVER_ERROR", "Errore durante la creazione della nota di credito");
+      }
+
+      await fteInvioNotaDiCredito({ mode, id: inserted.id });
+      await ricalcoloFattura(f, f.dataEmissione.getFullYear());
+      return inserted;
     }
   });
 
