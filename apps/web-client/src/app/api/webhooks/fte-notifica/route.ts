@@ -55,25 +55,16 @@ export async function POST(request: Request) {
         ? errori.map(e => (e.Suggerimento ?? e.Descrizione)).join("|")
         : errori.Suggerimento ?? errori.Descrizione;
 
-    const existingNotaDiCredito = await getNotaDiCredito(notification.invoice_uuid);
-    const existingFattura = await getFattura(notification.invoice_uuid);
-
     if (notification.type === "NS") {
-      if (existingFattura) {
-        if (existingFattura?.fteStato === FteStato.INVIATA)
-          return;
-        await updateFattura(
-          notification.invoice_uuid,
-          FteStato.SCARTATA,
-          message,
-        );
-      }
+      const existingFattura = await getFattura(notification.invoice_uuid);
+      if (existingFattura?.fteStato === FteStato.INVIATA)
+        return;
 
-      if (existingNotaDiCredito) {
-        if (existingNotaDiCredito?.fteStato === FteStato.INVIATA)
-          return;
-        await updateNotaDiCredito(notification.invoice_uuid, FteStato.SCARTATA, message);
-      }
+      await updateFattura(
+        notification.invoice_uuid,
+        FteStato.SCARTATA,
+        message,
+      );
 
       //  TODO: SEND SCARTO EMAIL
       // const resend = new Resend(env.RESEND_API_KEY);
@@ -89,16 +80,10 @@ export async function POST(request: Request) {
       // }
     }
     if (notification.type === "RC") {
-      if (existingFattura) {
-        await updateFattura(
-          notification.invoice_uuid,
-          FteStato.INVIATA,
-        );
-      }
-
-      if (existingNotaDiCredito) {
-        await updateNotaDiCredito(notification.invoice_uuid, FteStato.INVIATA);
-      }
+      await updateFattura(
+        notification.invoice_uuid,
+        FteStato.INVIATA,
+      );
     }
   }
 
