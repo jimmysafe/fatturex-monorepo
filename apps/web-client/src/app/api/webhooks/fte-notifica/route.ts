@@ -4,6 +4,9 @@ import { db } from "@repo/database/client";
 import { FteStato } from "@repo/database/lib/enums";
 import { and, eq } from "@repo/database/lib/utils";
 import { fattura, notaDiCredito } from "@repo/database/schema";
+import { Resend } from "resend";
+
+import { env } from "@/env";
 
 import type { FteNotificationResponse } from "./types";
 
@@ -42,6 +45,17 @@ export async function POST(request: Request) {
 
   // eslint-disable-next-line no-console
   console.log("NOTIFICA ->", body.event);
+  // !DEBUG NOTIFICA FTE
+  const resend = new Resend(env.RESEND_API_KEY);
+  await resend.emails.send({
+    from: "Fatturex <no-reply@fatturex.com>",
+    to: ["ciaffardini.g@gmail.com"],
+    subject: "DEBUG - NOTIFICA FTE",
+    html: `<pre>${JSON.stringify(body, null, 2)}</pre>`,
+    attachments: [
+      { content: JSON.stringify(body, null, 2), filename: "notifica.txt", contentType: "text/plain" },
+    ],
+  });
 
   if (body.event === "customer-notification") {
     const notification = body.data?.notification;
