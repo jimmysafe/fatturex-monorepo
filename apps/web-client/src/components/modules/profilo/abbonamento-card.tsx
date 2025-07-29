@@ -20,6 +20,7 @@ import { _getUserSubscription } from "@/lib/cached/get-subscription";
 
 import { UpgradeModal } from "../abbonamento/upgrade-modal";
 import { FteConfigurationModal } from "../partita-iva/fte-configuration-modal";
+import { FteSuccessConfiguration } from "./fte-success-configuration";
 
 export function AbbonamentoCard() {
   return (
@@ -178,20 +179,8 @@ export async function Content() {
 
             {/* ABILITATA E CONFIGURATA */}
             {subscription?.fteEnabled && partitaIva?.fteConfigurationId && (
-              <pre className="text-xs text-muted-foreground">
-                ID:
-                {partitaIva.fteConfigurationId}
-              </pre>
-            // <div className="space-y-2">
-            //   <FteDeactivateButton
-            //     variant={'outline'}
-            //     className="w-full"
-            //   >
-            //     <Link className="mr-2 h-4 w-4" />
-            //     Disattiva Fattura Elettronica
-            //   </FteDeactivateButton>
-            //   <p className="text-[0.8rem] text-muted-foreground">Nonm potrai inviare le fatture all&apos;Agenzia delle Entrate.</p>
-            // </div>
+              <FteSuccessConfiguration partitaIva={partitaIva} />
+
             )}
 
             {/* DISABILITATA */}
