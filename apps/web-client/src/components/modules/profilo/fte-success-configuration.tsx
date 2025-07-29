@@ -46,7 +46,7 @@ export function FteSuccessConfiguration({ partitaIva }: { partitaIva: Awaited<Re
   }
 
   // @ts-expect-error cant type impersonateBy
-  if (authLoading || !data?.session?.impersonatedBy)
+  if ((authLoading || !data?.session?.impersonatedBy) && data?.user.role !== "admin")
     return null;
 
   if (configQuery.isLoading)
