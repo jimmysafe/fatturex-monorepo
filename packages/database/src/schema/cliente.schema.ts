@@ -1,5 +1,4 @@
 import { user } from "@repo/database/schemas/auth.schema";
-import { codiceFiscaleRegex, partitaIvaRegex } from "@repo/shared/regex";
 import { sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
@@ -32,11 +31,8 @@ export const cliente = sqliteTable("clienti", {
 export const ClienteSchema = createSelectSchema(cliente);
 
 export const CreateClienteSchema = createInsertSchema(cliente, {
-  partitaIva: z.string().regex(partitaIvaRegex, "Partita IVA non valida").nullable(),
-  codiceFiscale: z.union([
-    z.string().regex(codiceFiscaleRegex).toUpperCase(),
-    z.string().regex(partitaIvaRegex).toUpperCase(),
-  ]).nullable(),
+  partitaIva: z.string().nullable(),
+  codiceFiscale: z.string().nullable(),
 }).omit({ id: true, createdAt: true, updatedAt: true, userId: true });
 
 export const UpdateClienteSchema = CreateClienteSchema.partial();

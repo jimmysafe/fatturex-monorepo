@@ -42,7 +42,7 @@ export function FatturaActions(
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {fattura.fteStato === FteStato.NON_INVIATA && (
+        {(fattura.fteStato === FteStato.NON_INVIATA || fattura.fteStato === FteStato.SCARTATA) && (
           <>
             <DropdownMenuItem asChild>
               <Link href={`/${anno}/fatture/${fattura.id}/modifica`}>
