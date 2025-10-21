@@ -4,6 +4,9 @@ import { db } from "@repo/database/client";
 import { FteStato } from "@repo/database/lib/enums";
 import { and, eq } from "@repo/database/lib/utils";
 import { fattura, notaDiCredito } from "@repo/database/schema";
+import { Resend } from "resend";
+
+import { env } from "@/env";
 
 import type { FteNotificationResponse } from "./types";
 
@@ -42,6 +45,17 @@ export async function POST(request: Request) {
 
   // eslint-disable-next-line no-console
   console.log("NOTIFICA ->", body.event);
+  // !DEBUG NOTIFICA FTE
+  const resend = new Resend(env.RESEND_API_KEY);
+  await resend.emails.send({
+    from: "Fatturex <no-reply@fatturex.com>",
+    to: ["ciaffardini.g@gmail.com"],
+    subject: "DEBUG - NOTIFICA FTE",
+    html: `<pre>${JSON.stringify(body, null, 2)}</pre>`,
+    attachments: [
+      { content: JSON.stringify(body, null, 2), filename: "notifica.txt", contentType: "text/plain" },
+    ],
+  });
 
   if (body.event === "customer-notification") {
     const notification = body.data?.notification;
@@ -55,16 +69,25 @@ export async function POST(request: Request) {
         ? errori.map(e => (e.Suggerimento ?? e.Descrizione)).join("|")
         : errori.Suggerimento ?? errori.Descrizione;
 
-    if (notification.type === "NS") {
-      const existingFattura = await getFattura(notification.invoice_uuid);
-      if (existingFattura?.fteStato === FteStato.INVIATA)
-        return;
+    const existingNotaDiCredito = await getNotaDiCredito(notification.invoice_uuid);
+    const existingFattura = await getFattura(notification.invoice_uuid);
 
-      await updateFattura(
-        notification.invoice_uuid,
-        FteStato.SCARTATA,
-        message,
-      );
+    if (notification.type === "NS") {
+      if (existingFattura) {
+        if (existingFattura?.fteStato === FteStato.INVIATA)
+          return;
+        await updateFattura(
+          notification.invoice_uuid,
+          FteStato.SCARTATA,
+          message,
+        );
+      }
+
+      if (existingNotaDiCredito) {
+        if (existingNotaDiCredito?.fteStato === FteStato.INVIATA)
+          return;
+        await updateNotaDiCredito(notification.invoice_uuid, FteStato.SCARTATA, message);
+      }
 
       //  TODO: SEND SCARTO EMAIL
       // const resend = new Resend(env.RESEND_API_KEY);
@@ -80,10 +103,16 @@ export async function POST(request: Request) {
       // }
     }
     if (notification.type === "RC") {
-      await updateFattura(
-        notification.invoice_uuid,
-        FteStato.INVIATA,
-      );
+      if (existingFattura) {
+        await updateFattura(
+          notification.invoice_uuid,
+          FteStato.INVIATA,
+        );
+      }
+
+      if (existingNotaDiCredito) {
+        await updateNotaDiCredito(notification.invoice_uuid, FteStato.INVIATA);
+      }
     }
   }
 
