@@ -256,7 +256,7 @@ export const deleteFattura = authProcedure
     if (!f)
       throw new ZSAError("NOT_FOUND", "Fattura non trovata");
 
-    if (f.fteStato !== FteStato.NON_INVIATA)
+    if (f.fteStato !== FteStato.NON_INVIATA && f.fteStato !== FteStato.SCARTATA)
       throw new ZSAError("UNPROCESSABLE_CONTENT", "Non puoi eliminare una fattura già inviata");
 
     const record = await db.transaction(async (tx) => {
