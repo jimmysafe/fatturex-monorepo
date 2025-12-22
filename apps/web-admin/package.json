@@ -13,7 +13,7 @@
     "@repo/database": "workspace:*",
     "@repo/shared": "workspace:*",
     "@repo/ui": "workspace:*",
-    "next": "catalog:react",
+    "next": "15.5.8",
     "react": "catalog:react",
     "react-dom": "catalog:react"
   },
