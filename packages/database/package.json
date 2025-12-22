@@ -19,7 +19,7 @@
     "migrate": "drizzle-kit migrate",
     "studio": "drizzle-kit studio",
     "push": "drizzle-kit push",
-    "build": "drizzle-kit migrate"
+    "build:old": "drizzle-kit migrate"
   },
   "peerDependencies": {
     "@libsql/client": "catalog:",
