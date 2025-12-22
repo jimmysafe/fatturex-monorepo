@@ -14,7 +14,7 @@
     "@repo/ui": "workspace:*",
     "@vercel/analytics": "catalog:",
     "lucide-react": "catalog:",
-    "next": "catalog:react",
+    "next": "15.5.8",
     "react": "catalog:react",
     "react-dom": "catalog:react"
   },
