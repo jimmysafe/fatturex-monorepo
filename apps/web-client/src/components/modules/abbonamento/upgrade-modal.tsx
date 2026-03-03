@@ -52,7 +52,7 @@ export function UpgradeModal({ trigger, ...props }: Omit<RootCredenzaDialogProps
 
   return (
     <CredenzaDialog open={isOpen} onOpenChange={setIsOpen} {...props}>
-      <CredenzaDialogTrigger asChild>{trigger || <Button className="w-full bg-green-500" size="sm">Effettua Upgrade</Button>}</CredenzaDialogTrigger>
+      <CredenzaDialogTrigger asChild>{(trigger || <Button className="w-full bg-green-500" size="sm">Effettua Upgrade</Button>) as React.ReactNode}</CredenzaDialogTrigger>
       <CredenzaDialogContent className="w-full max-w-4xl">
         <CredenzaDialogHeader>
           <CredenzaDialogTitle>Upgrade</CredenzaDialogTitle>
