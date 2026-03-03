@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 const authRoutes = ["/signin", "/verify"];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   // ! Session cookie is always null in prod, issue @ https://github.com/better-auth/better-auth/issues/1487
