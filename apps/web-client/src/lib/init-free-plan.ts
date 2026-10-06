@@ -1,11 +1,12 @@
 import { auth } from "@repo/auth";
-import { getUserSubscription } from "@repo/database/queries/subscription";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 import { ZSAError } from "zsa";
 
 import { env } from "@/env";
+
+import { findCurrentStripeSubscription } from "./find-current-stripe-subscription";
 
 const stripe = new Stripe(env.STRIPE_SECRET_KEY);
 
@@ -29,16 +30,24 @@ export async function initFreePlan(priceId: string, user: { email: string; custo
       throw new ZSAError("UNPROCESSABLE_CONTENT", "Errore creazione cliente");
     }
 
-    const existingSubscription = await getUserSubscription(user.id);
+    const customerId = customer?.id || user.customerId || "";
+    const existingSubscription = await findCurrentStripeSubscription(stripe, customerId);
     if (!existingSubscription) {
-      subscription = await stripe.subscriptions.create({
-        customer: customer?.id || user.customerId || "",
-        items: [{ price: priceId }],
-        payment_behavior: "allow_incomplete",
-      });
+      const latest = await stripe.subscriptions.list({ customer: customerId, status: "all", limit: 1 });
+      const mostRecent = latest.data[0];
+      if (mostRecent && mostRecent.status !== "canceled" && mostRecent.status !== "incomplete_expired") {
+        subscription = mostRecent;
+      }
+      else {
+        subscription = await stripe.subscriptions.create({
+          customer: customerId,
+          items: [{ price: priceId }],
+          payment_behavior: "allow_incomplete",
+        }, { idempotencyKey: `free-subscription:${customerId}:${mostRecent?.id || "initial"}:${priceId}` });
+      }
     }
     else {
-      subscription = await stripe.subscriptions.retrieve(existingSubscription.subscriptionId);
+      subscription = existingSubscription;
     }
   }
   catch (error) {

@@ -13,6 +13,7 @@ import { Skeleton } from "@repo/ui/components/ui/skeleton";
 import { format } from "date-fns";
 import { it } from "date-fns/locale";
 import { Calendar, CreditCard, ExternalLink, Link, Package, Rocket } from "lucide-react";
+import NextLink from "next/link";
 
 import { OpenCustomerPortalButton } from "@/components/common/open-customer-portal-button";
 import { _getPartitaIva } from "@/lib/cached/get-partita-iva";
@@ -43,6 +44,7 @@ export async function Content() {
   const searchesUsed = subscription?.searchesCount || 0;
 
   const isProPlan = getPlan(subscription?.planId)?.label === "Pro";
+  const canChoosePlan = !subscription || subscription.stato === SubscriptionStato.CANCELLATO || subscription.stato === SubscriptionStato.SCADUTO;
 
   return (
     <div className="grid gap-6 md:grid-cols-2">
@@ -102,6 +104,14 @@ export async function Content() {
             <ExternalLink className="mr-2 size-4" />
             Gestisci abbonamento
           </OpenCustomerPortalButton>
+          {canChoosePlan && (
+            <Button asChild className="w-full">
+              <NextLink href="/payment/plans">
+                <Rocket className="mr-2 size-4" />
+                Scegli piano
+              </NextLink>
+            </Button>
+          )}
           {((subscription?.stato === SubscriptionStato.ATTIVO) && !isProPlan) && (
             <UpgradeModal trigger={(
               <Button className="w-full">
