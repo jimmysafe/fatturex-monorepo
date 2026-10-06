@@ -11,16 +11,12 @@ import { Card } from "@repo/ui/components/ui/card";
 import { Label } from "@repo/ui/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@repo/ui/components/ui/radio-group";
 import { Separator } from "@repo/ui/components/ui/separator";
-import { loadStripe } from "@stripe/stripe-js";
 import { Check } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useServerAction } from "zsa-react";
 
-import { env } from "@/env";
 import { createCheckoutSession } from "@/server/actions/subscriptions";
-
-const stripePromise = loadStripe(env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 export function Pricing() {
   const router = useRouter();
@@ -34,13 +30,8 @@ export function Pricing() {
 
       refetch();
 
-      if (session.id) {
-        const stripe = await stripePromise;
-        const res = await stripe?.redirectToCheckout({ sessionId: session.id });
-        if (res?.error) {
-          console.error(res.error);
-          toast.error("Errore nella creazione della sessione di pagamento.");
-        }
+      if ("url" in session && session.url) {
+        window.location.href = session.url;
       }
       else {
         router.push("/");
